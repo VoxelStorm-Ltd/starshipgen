@@ -16,6 +16,7 @@ public:
     PROPULSION_FISSION,           // Fission rocket
     PROPULSION_FUSIONTHERMAL,     // Fusion thermal rocket
     PROPULSION_FISSIONTHERMAL,    // Fission thermal rocket
+    PROPULSION_FISSIONFRAGMENT,   // Fission-fragment rocket
     PROPULSION_CHEMICAL,          // Chemical rocket
     PROPULSION_ANTIMATTER,        // Antimatter rocket
     PROPULSION_ION,               // Ion thruster

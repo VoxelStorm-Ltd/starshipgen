@@ -55,14 +55,14 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
   }
   // Decide on slower-than-light propulsion system appropriate to the tech level
   if(thisciv->techlevel > 191) {
-    propulsiontype propulsion = (propulsiontype)randomgen->pick_one(
+    propulsion = (propulsiontype)randomgen->pick_one(
       PROPULSION_ION,
       PROPULSION_RAMSCOOP,
       PROPULSION_VASIMR,
       PROPULSION_ANTIMATTERFUSION
     );
   } else if(thisciv->techlevel > 127) {
-    propulsiontype propulsion = (propulsiontype)randomgen->pick_one(
+    propulsion = (propulsiontype)randomgen->pick_one(
       PROPULSION_NONE,
       PROPULSION_FUSION,
       PROPULSION_FUSIONTHERMAL,
@@ -74,76 +74,179 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
       PROPULSION_ANTIMATTERFUSION
     );
   } else if(thisciv->techlevel > 63) {
-    propulsiontype propulsion = (propulsiontype)randomgen->pick_one(
+    propulsion = (propulsiontype)randomgen->pick_one(
       PROPULSION_NONE,
       PROPULSION_FUSION,
       PROPULSION_FUSIONTHERMAL,
       PROPULSION_FISSIONTHERMAL,
+      PROPULSION_FISSIONFRAGMENT,
       PROPULSION_ION,
       PROPULSION_RAMSCOOP,
       PROPULSION_SAIL,
       PROPULSION_VASIMR
     );
   } else if(thisciv->techlevel > 16) {
-    propulsiontype propulsion = (propulsiontype)randomgen->pick_one(
+    propulsion = (propulsiontype)randomgen->pick_one(
       PROPULSION_NONE,
       PROPULSION_FUSION,
       PROPULSION_FISSION,
       PROPULSION_FUSIONTHERMAL,
       PROPULSION_FISSIONTHERMAL,
+      PROPULSION_FISSIONFRAGMENT,
       PROPULSION_CHEMICAL,
       PROPULSION_ION,
       PROPULSION_SAIL,
       PROPULSION_VASIMR
     );
   } else {
-    propulsiontype propulsion = (propulsiontype)randomgen->pick_one(
+    propulsion = (propulsiontype)randomgen->pick_one(
       PROPULSION_FISSION,
       PROPULSION_FISSIONTHERMAL,
+      PROPULSION_FISSIONFRAGMENT,
       PROPULSION_CHEMICAL
     );
   }
-  if(propulsion = PROPULSION_NONE) {
+  if(propulsion == PROPULSION_NONE) {
     has_stldrive = false;
     has_atmospheric = false;
   } else {
+    has_stldrive = true;
     unsigned int numengines = 1;
     switch(propulsion) {
     case PROPULSION_FUSION:
       numengines = 1;
-      std::cout << "This ship has one fusion rocket engine" << std::endl;
+      has_atmospheric = true;
+      std::cout << "This ship has one inertial confinement direct exhaust fusion rocket engine" << std::endl;
+      // radiation shielding
+      // fusion pellet magazines (duterium/helium3 mix)
+      // inertial confinement reactor
+      // lasers
+      // magnetic nozzle
+      // exhaust plasma tapping induction coils
+      // exhaust nozzle
       break;
     case PROPULSION_FISSION:
       numengines = 1;
-      std::cout << "This ship has one dirty nuclear rocket engines" << std::endl;
+      has_atmospheric = true;
+      std::cout << "This ship has one external nuclear pulse rocket engine" << std::endl;
+      // radiation shielding
+      // nuclear pulse unit magazines
+      // ejector gas tank
+      // pulse unit launcher
+      // coolant storage tanks
+      // plasma deflector cone
+      // second stage shock absorbers
+      // intermediate platform
+      // first stage shock absorbers
+      // pusher plate
       break;
     case PROPULSION_FUSIONTHERMAL:
       numengines = 1 + ((double)redundancy / 255.0 * 6) + 0.5;
+      has_atmospheric = true;
       std::cout << "This ship has " << numengines << " thermal fusion nuclear rocket engines" << std::endl;
+      // hydrogen fuel source
+      // inertial confinement reactor core
+      // plasma compression guns
+      // external disc shield
+      // turbopumps
+      // exhaust nozzle
       break;
     case PROPULSION_FISSIONTHERMAL:
-      //numengines = randomgen->pick_one(1, 2, 3, 4);
       numengines = 1 + ((double)redundancy / 255.0 * 3) + 0.5;
+      has_atmospheric = true;
       std::cout << "This ship has " << numengines << " thermal nuclear rocket engines" << std::endl;
+      // hydrogen fuel source
+      // reactor core
+      // control drum
+      // reflector
+      // internal shield
+      // external disc shield
+      // turbopumps
+      // exhaust nozzle
+      break;
+    case PROPULSION_FISSIONFRAGMENT:
+      numengines = randomgen->pick_one(1, 2, 3, 4);
+      has_atmospheric = true;
+      std::cout << "This ship has " << numengines << " fission fragment nuclear rocket engines" << std::endl;
+      // fissionable fuel disks
+      // reactor core
+      // fragment exhaust
+      // moderator
+      // containment field generator
+      // induction coils
+      // decelerator
+      // thermonuclear generator
       break;
     case PROPULSION_CHEMICAL:
       numengines = randomgen->pick_one(5, 6, 8, 9, 30);
+      has_atmospheric = true;
       std::cout << "This ship has " << numengines << " old-fashioned chemical rocket engines" << std::endl;
+      // hydrogen fuel source
+      // oxygen fuel source
+      // turbo pumps
+      // engine nozzle
       break;
     case PROPULSION_ANTIMATTER:
-      break;
-    case PROPULSION_ION:
-      break;
-    case PROPULSION_RAMSCOOP:
-      break;
-    case PROPULSION_SAIL:
-      break;
-    case PROPULSION_VASIMR:
+      numengines = 1;
+      has_atmospheric = true;
+      std::cout << "This ship has one matter/antimatter annihilation rocket engine" << std::endl;
+      // hydrogen fuel source
+      // antimatter confinement system
+      // reactor core
+      // magnetic nozzle
       break;
     case PROPULSION_ANTIMATTERFUSION:
+      numengines = 1;
+      has_atmospheric = true;
+      std::cout << "This ship is equipped with an antimatter catalyzed nuclear pulse engine" << std::endl;
+      // hydrogen fuel source
+      // antimatter confinement system
+      // radiation shielding
+      // nuclear pulse microfusion unit magazines
+      // ejector gas tank
+      // pulse unit launcher
+      // coolant storage tanks
+      // plasma deflector cone
+      // shock absorbers
+      // pusher plate
+      break;
+    case PROPULSION_ION:
+      numengines = randomgen->pick_one(1, 2, 3, 4);
+      has_atmospheric = false;
+      std::cout << "This ship is equipped with " << numengines << " electric ion thrusters" << std::endl;
+      // xenon fuel source
+      // engine
+      // engine nozzle
+      break;
+    case PROPULSION_RAMSCOOP:
+      numengines = randomgen->pick_one(1, 2, 3);
+      has_atmospheric = false;
+      std::cout << "This ship is equipped with " << numengines << " Bussard ramscoops" << std::endl;
+      // ionising forward laser
+      // electrostatic field generators
+      // collector
+      // fusion chamber
+      // fusion nozzle
+      break;
+    case PROPULSION_SAIL:
+      numengines = 1;
+      has_atmospheric = false;
+      std::cout << "This ship is equipped with a solar sail" << std::endl;
+      // sail tether points
+      break;
+    case PROPULSION_VASIMR:
+      numengines = randomgen->pick_one(2, 4);
+      has_atmospheric = false;
+      std::cout << "This ship has " << numengines << " Variable Specific Impulse Magnetoplasma Rocket (VASIMR) engines" << std::endl;
+      // argon fuel source
+      // RF generators
+      // injector
+      // helicon coupler
+      // ICH coupler
+      // engine nozzle
       break;
     default:
-      std::cout << "ERROR: STL propulsion determination error, unhandled enum " << stlpropulsion << std::endl;;
+      std::cout << "ERROR: STL propulsion determination error, unhandled enum " << propulsion << std::endl;;
     }
   }
   // Decide on power system

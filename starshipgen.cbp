@@ -31,8 +31,22 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add option="-std=c++1y" />
 		</Compiler>
+		<Unit filename="civilisation.cpp" />
+		<Unit filename="civilisation.h" />
+		<Unit filename="civilisation_describe.cpp" />
+		<Unit filename="component.cpp" />
+		<Unit filename="component.h" />
+		<Unit filename="componenttype.h" />
+		<Unit filename="dependency.cpp" />
+		<Unit filename="dependency.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="randomgen.cpp" />
+		<Unit filename="randomgen.h" />
+		<Unit filename="starship.cpp" />
+		<Unit filename="starship.h" />
+		<Unit filename="starship_describe.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

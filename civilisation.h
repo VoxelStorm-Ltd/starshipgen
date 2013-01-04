@@ -66,7 +66,9 @@ public:
   bool random_bool();
   bool random_bool_weighted(double weight_true);
   char random_char();
+  char random_char_normal();
   unsigned char random_uchar();
+  unsigned char random_uchar_normal();
   std::string describe();
 };
 

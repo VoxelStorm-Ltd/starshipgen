@@ -1,7 +1,7 @@
 #include "starship.h"
 #include "civilisation.h"
 
-starship::starship(unsigned int seed, civilisation *thisciv, std::vector<componenttype> componenttypelist) {
+starship::starship(unsigned int seed, civilisation *thisciv, std::vector<componenttype*> componenttypelist) {
   /// Constructor to generate a spaceship based on a given civilisation
   randomgen = new randomgenerator(seed);
   civ = thisciv;
@@ -110,6 +110,9 @@ starship::starship(unsigned int seed, civilisation *thisciv, std::vector<compone
   if(propulsion == PROPULSION_NONE) {
     has_stldrive = false;
     has_atmospheric = false;
+    if(has_ftldrive == false) {
+      std::cout << "This vessel is on a fixed trajectory, with no active means of adjusting its direction of motion." << std::endl;
+    }
   } else {
     has_stldrive = true;
     unsigned int numengines = 1;

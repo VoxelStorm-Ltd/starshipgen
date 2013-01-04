@@ -54,7 +54,7 @@ public:
   std::vector<component*> parts;          // the ship's constituent component parts
   std::vector<dependency*> dependencies;  // all shipboard interdependencies
 
-  starship(unsigned int seed, civilisation *thisciv, std::vector<componenttype> thiscomponenttypelist);
+  starship(unsigned int seed, civilisation *thisciv, std::vector<componenttype*> thiscomponenttypelist);
   ~starship();
   std::string describe();
 };

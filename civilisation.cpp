@@ -22,6 +22,7 @@ civilisation::civilisation(unsigned int seed) {
   invented_androids      = randomgen->random_bool_weighted(0.75);
   invented_cloning       = randomgen->random_bool_weighted(0.2);
   invented_teleportation = randomgen->random_bool_weighted(0.2);
+  invented_replicator    = randomgen->random_bool_weighted(0.75);
 
   // racial/cultural preferences (-127 to 127, default to 0)
   intelligence    = randomgen->random_char_normal();

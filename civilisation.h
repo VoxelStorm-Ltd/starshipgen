@@ -20,6 +20,7 @@ public:
   bool invented_androids;       // whether artificially intelligent humanoid machines exist
   bool invented_cloning;        // whether fast human cloning exists (producing duplicates with a short gestation time)
   bool invented_teleportation;  // has invented ways of transmitting individual living beings across space as energy
+  bool invented_replicator;     // has invented ways of reassembling matter into new molecules
 
   // social attributes
   bool deathpenalty;      // whether execution is a legitimate form of punishment

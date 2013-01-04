@@ -224,6 +224,9 @@ std::string civilisation::describe() {
   if(invented_teleportation) {
     desc << "* teleportation" << std::endl;
   }
+  if(invented_replicator) {
+    desc << "* molecular nano-reassembly" << std::endl;
+  }
 
   if(!alcohol_legal) {
     desc << "Alcohol has been outlawed. ";

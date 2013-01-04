@@ -219,9 +219,9 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
       // engine nozzle
       break;
     case PROPULSION_RAMSCOOP:
-      numengines = randomgen->pick_one(1, 2, 3);
+      numengines = 1;
       has_atmospheric = false;
-      std::cout << "This ship is equipped with " << numengines << " Bussard ramscoops" << std::endl;
+      std::cout << "This ship is equipped with a Bussard ramscoop engine" << std::endl;
       // ionising forward laser
       // electrostatic field generators
       // collector

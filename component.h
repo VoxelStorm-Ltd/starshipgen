@@ -6,6 +6,8 @@
 
 class component {
 public:
+  componenttype *thistype;          // what sort of component it is
+
   std::vector<component*> parts;    // its constituent component parts
 
   uint64_t timeoffailure;    // actual time on ship's clock when this component will fail
@@ -14,7 +16,7 @@ public:
 
   double temperature;   // in kelvin
 
-  component();
+  component(componenttype *thiscomponenttype);
   ~component();
 };
 

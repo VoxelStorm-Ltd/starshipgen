@@ -1,16 +1,17 @@
 #include "starship.h"
 #include "civilisation.h"
 
-starship::starship(unsigned int seed, civilisation *thisciv) {
+starship::starship(unsigned int seed, civilisation *thisciv, std::vector<componenttype> componenttypelist) {
   /// Constructor to generate a spaceship based on a given civilisation
   randomgen = new randomgenerator(seed);
+  civ = thisciv;
 
   // set up overall cultural factors
-  redundancy = randomgen->random_uchar_normal_biased(thisciv->wealth);  // bias redundancy by wealth
+  redundancy = randomgen->random_uchar_normal_biased(civ->wealth);  // bias redundancy by wealth
   std::cout << "DEBUG: This ship has a redundancy level " << (unsigned int)redundancy << std::endl;
 
   // Check if we have FTL
-  if(thisciv->invented_ftl) {
+  if(civ->invented_ftl) {
     propulsiontype ftlpropulsion = (propulsiontype)randomgen->pick_one(
       PROPULSION_WARPBUBBLE,
       PROPULSION_HYPERDRIVE,
@@ -20,10 +21,10 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
       PROPULSION_WARPGATE
     );
     // Decide whether FTL travel is on-board or external
-    if(propulsion == PROPULSION_WORMHOLE ||
-       propulsion == PROPULSION_WARPGATE) {
+    if(ftlpropulsion == PROPULSION_WORMHOLE ||
+       ftlpropulsion == PROPULSION_WARPGATE) {
       has_ftldrive = false;
-      std::cout << "This ship can travel faster than light by travelling through relevant anomalies" << std::endl;
+      std::cout << "This ship can travel faster than light by entering certain fixed anomalies." << std::endl;
     } else {
       has_ftldrive = true;
       // Populate engines based on type
@@ -32,19 +33,19 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
       case PROPULSION_WARPBUBBLE:
         //numengines = randomgen->pick_one(1, 2, 3, 4);
         numengines = 1 + ((double)redundancy / 255.0 * 3) + 0.5;
-        std::cout << "This ship can travel faster than light, using " << numengines << " warp bubble engines" << std::endl;
+        std::cout << "This ship can travel faster than light, using " << numengines << " warp bubble engines." << std::endl;
         break;
       case PROPULSION_HYPERDRIVE:
         numengines = 1 + randomgen->random_bool_weighted((double)redundancy / 255.0);
-        std::cout << "This ship can travel faster than light, using " << numengines << " hyperdrives" << std::endl;
+        std::cout << "This ship can travel faster than light, using " << numengines << " hyperdrives." << std::endl;
         break;
       case PROPULSION_JUMPFINS:
         numengines = randomgen->pick_one(16, 32, 64, 128);
-        std::cout << "This ship can travel faster than light, using " << numengines << " jump fins" << std::endl;
+        std::cout << "This ship can travel faster than light, using " << numengines << " jump fins." << std::endl;
         break;
       case PROPULSION_WITCHSPACE:
         numengines = 1;
-        std::cout << "This ship can travel faster than light, using a witchspace jump drive" << std::endl;
+        std::cout << "This ship can travel faster than light, using a witchspace jump drive." << std::endl;
         break;
       default:
         std::cout << "ERROR: FTL propulsion determination error, unhandled enum " << ftlpropulsion << std::endl;
@@ -54,14 +55,14 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
     ftlpropulsion = PROPULSION_NONE;
   }
   // Decide on slower-than-light propulsion system appropriate to the tech level
-  if(thisciv->techlevel > 191) {
+  if(civ->techlevel > 191) {
     propulsion = (propulsiontype)randomgen->pick_one(
       PROPULSION_ION,
       PROPULSION_RAMSCOOP,
       PROPULSION_VASIMR,
       PROPULSION_ANTIMATTERFUSION
     );
-  } else if(thisciv->techlevel > 127) {
+  } else if(civ->techlevel > 127) {
     propulsion = (propulsiontype)randomgen->pick_one(
       PROPULSION_NONE,
       PROPULSION_FUSION,
@@ -73,7 +74,7 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
       PROPULSION_VASIMR,
       PROPULSION_ANTIMATTERFUSION
     );
-  } else if(thisciv->techlevel > 63) {
+  } else if(civ->techlevel > 63) {
     propulsion = (propulsiontype)randomgen->pick_one(
       PROPULSION_NONE,
       PROPULSION_FUSION,
@@ -85,7 +86,7 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
       PROPULSION_SAIL,
       PROPULSION_VASIMR
     );
-  } else if(thisciv->techlevel > 16) {
+  } else if(civ->techlevel > 16) {
     propulsion = (propulsiontype)randomgen->pick_one(
       PROPULSION_NONE,
       PROPULSION_FUSION,
@@ -116,7 +117,7 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
     case PROPULSION_FUSION:
       numengines = 1;
       has_atmospheric = true;
-      std::cout << "This ship has one inertial confinement direct exhaust fusion rocket engine" << std::endl;
+      std::cout << "This ship has one inertial confinement direct exhaust fusion rocket engine." << std::endl;
       // radiation shielding
       // fusion pellet magazines (duterium/helium3 mix)
       // inertial confinement reactor
@@ -128,7 +129,7 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
     case PROPULSION_FISSION:
       numengines = 1;
       has_atmospheric = true;
-      std::cout << "This ship has one external nuclear pulse rocket engine" << std::endl;
+      std::cout << "This ship has one external nuclear pulse rocket engine." << std::endl;
       // radiation shielding
       // nuclear pulse unit magazines
       // ejector gas tank
@@ -143,7 +144,7 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
     case PROPULSION_FUSIONTHERMAL:
       numengines = 1 + ((double)redundancy / 255.0 * 6) + 0.5;
       has_atmospheric = true;
-      std::cout << "This ship has " << numengines << " thermal fusion nuclear rocket engines" << std::endl;
+      std::cout << "This ship has " << numengines << " thermal fusion nuclear rocket engines." << std::endl;
       // hydrogen fuel source
       // inertial confinement reactor core
       // plasma compression guns
@@ -154,7 +155,7 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
     case PROPULSION_FISSIONTHERMAL:
       numengines = 1 + ((double)redundancy / 255.0 * 3) + 0.5;
       has_atmospheric = true;
-      std::cout << "This ship has " << numengines << " thermal nuclear rocket engines" << std::endl;
+      std::cout << "This ship has " << numengines << " thermal nuclear rocket engines." << std::endl;
       // hydrogen fuel source
       // reactor core
       // control drum
@@ -167,7 +168,7 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
     case PROPULSION_FISSIONFRAGMENT:
       numengines = randomgen->pick_one(1, 2, 3, 4);
       has_atmospheric = true;
-      std::cout << "This ship has " << numengines << " fission fragment nuclear rocket engines" << std::endl;
+      std::cout << "This ship has " << numengines << " fission fragment nuclear rocket engines." << std::endl;
       // fissionable fuel disks
       // reactor core
       // fragment exhaust
@@ -180,7 +181,7 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
     case PROPULSION_CHEMICAL:
       numengines = randomgen->pick_one(5, 6, 8, 9, 30);
       has_atmospheric = true;
-      std::cout << "This ship has " << numengines << " old-fashioned chemical rocket engines" << std::endl;
+      std::cout << "This ship has " << numengines << " old-fashioned chemical rocket engines." << std::endl;
       // hydrogen fuel source
       // oxygen fuel source
       // turbo pumps
@@ -189,7 +190,7 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
     case PROPULSION_ANTIMATTER:
       numengines = 1;
       has_atmospheric = true;
-      std::cout << "This ship has one matter/antimatter annihilation rocket engine" << std::endl;
+      std::cout << "This ship has one matter/antimatter annihilation rocket engine." << std::endl;
       // hydrogen fuel source
       // antimatter confinement system
       // reactor core
@@ -198,7 +199,7 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
     case PROPULSION_ANTIMATTERFUSION:
       numengines = 1;
       has_atmospheric = true;
-      std::cout << "This ship is equipped with an antimatter catalyzed nuclear pulse engine" << std::endl;
+      std::cout << "This ship is equipped with an antimatter catalyzed nuclear pulse engine." << std::endl;
       // hydrogen fuel source
       // antimatter confinement system
       // radiation shielding
@@ -213,7 +214,7 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
     case PROPULSION_ION:
       numengines = randomgen->pick_one(1, 2, 3, 4);
       has_atmospheric = false;
-      std::cout << "This ship is equipped with " << numengines << " electric ion thrusters" << std::endl;
+      std::cout << "This ship is equipped with " << numengines << " electric ion thrusters." << std::endl;
       // xenon fuel source
       // engine
       // engine nozzle
@@ -221,7 +222,7 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
     case PROPULSION_RAMSCOOP:
       numengines = 1;
       has_atmospheric = false;
-      std::cout << "This ship is equipped with a Bussard ramscoop engine" << std::endl;
+      std::cout << "This ship is equipped with a Bussard ramscoop engine." << std::endl;
       // ionising forward laser
       // electrostatic field generators
       // collector
@@ -231,13 +232,13 @@ starship::starship(unsigned int seed, civilisation *thisciv) {
     case PROPULSION_SAIL:
       numengines = 1;
       has_atmospheric = false;
-      std::cout << "This ship is equipped with a solar sail" << std::endl;
+      std::cout << "This ship is equipped with a solar sail." << std::endl;
       // sail tether points
       break;
     case PROPULSION_VASIMR:
       numengines = randomgen->pick_one(2, 4);
       has_atmospheric = false;
-      std::cout << "This ship has " << numengines << " Variable Specific Impulse Magnetoplasma Rocket (VASIMR) engines" << std::endl;
+      std::cout << "This ship has " << numengines << " Variable Specific Impulse Magnetoplasma Rocket (VASIMR) engines." << std::endl;
       // argon fuel source
       // RF generators
       // injector

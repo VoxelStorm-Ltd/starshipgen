@@ -48,6 +48,7 @@ public:
   char artisticness;    // how important works of art are
   char religiousness;   // how important religious ceremony is
   char fashion;         // how important clothes and uniforms are
+  char precision;       // how closely components adhere to their MTBF and specs
   char treachery;       // how likely to betray their comrades
   char belligirence;    // how eager to start a fight
   char ruthlessness;    // how likely to ignore the suffering of others

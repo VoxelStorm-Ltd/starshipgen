@@ -168,6 +168,11 @@ std::string civilisation::describe() {
   } else if(fashion < -notethres) {
     desc << " They are frequently seen to be sloppily dressed.";
   }
+  if(precision > notethres) {
+    desc << " They are famous for their precise engineering.";
+  } else if(precision < -notethres) {
+    desc << " They are infamous for sloppy quality control standards.";
+  }
   if(alcohol_use > notethres) {
     desc << " Drink plays a major role in their culture.";
   } else if(alcohol_use < -notethres) {

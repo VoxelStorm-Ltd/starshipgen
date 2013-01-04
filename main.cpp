@@ -10,7 +10,9 @@ int main() {
   civilisation *thisciv = new civilisation(0);
   cout << thisciv->describe() << endl;
 
-  starship *thisship = new starship(4, thisciv);
+  std::vector<componenttype> componenttypelist;
+
+  starship *thisship = new starship(2, thisciv, componenttypelist);
   cout << thisship->describe() << endl;
 
   return 0;

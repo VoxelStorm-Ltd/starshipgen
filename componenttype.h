@@ -2,26 +2,27 @@
 #define COMPONENTTYPE_H_INCLUDED
 
 #include <string>
+#include "civilisation.h"
 
 class componenttype {
 public:
   enum failuremode {
-    NONE         = 0,
-    DEACTIVATED  = 1<<1,    // it's just been switched off
-    DISCONNECTED = 1<<2,    // it's been physically disconnected (makes sense for conduits etc) (repairable)
-    SURGING      = 1<<3,    // delivering excess power/fuel (conduits etc) (repairable)
-    STUCKON      = 1<<4,    // it's stuck in on operation (repairable)
-    STUCKOFF     = 1<<5,    // it's stuck in off operation (repairable)
-    TOGGLING     = 1<<6,    // it's rapidly toggling on and off (repairable)
-    RANDOM       = 1<<7,    // it's toggling on and off at random (repairable)
-    SLOWON       = 1<<8,    // there is an unusual delay in activation
-    SLOWOFF      = 1<<9,    // there is an unusual delay in deactivation
-    NOPOWER      = 1<<10,   // power's not being delivered (repairable)
-    NOFUEL       = 1<<11,   // fuel's not being delivered (repairable)
-    UNDERPOWER   = 1<<12,   // insufficient power being delivered (repairable)
-    UNDERFUEL    = 1<<13,   // insufficient fuel being delivered (repairable)
-    ONFIRE       = 1<<14,   // is currently in flames (repairable with fire extinguisher)
-    LEAKING      = 1<<15,   // is currently letting out some of whatever it contains (conduits etc)
+    FAILURE_NONE         = 0,
+    FAILURE_DEACTIVATED  = 1<<1,    // it's just been switched off
+    FAILURE_DISCONNECTED = 1<<2,    // it's been physically disconnected (makes sense for conduits etc) (repairable)
+    FAILURE_SURGING      = 1<<3,    // delivering excess power/fuel (conduits etc) (repairable)
+    FAILURE_STUCKON      = 1<<4,    // it's stuck in on operation (repairable)
+    FAILURE_STUCKOFF     = 1<<5,    // it's stuck in off operation (repairable)
+    FAILURE_TOGGLING     = 1<<6,    // it's rapidly toggling on and off (repairable)
+    FAILURE_RANDOM       = 1<<7,    // it's toggling on and off at random (repairable)
+    FAILURE_SLOWON       = 1<<8,    // there is an unusual delay in activation
+    FAILURE_SLOWOFF      = 1<<9,    // there is an unusual delay in deactivation
+    FAILURE_NOPOWER      = 1<<10,   // power's not being delivered (repairable)
+    FAILURE_NOFUEL       = 1<<11,   // fuel's not being delivered (repairable)
+    FAILURE_UNDERPOWER   = 1<<12,   // insufficient power being delivered (repairable)
+    FAILURE_UNDERFUEL    = 1<<13,   // insufficient fuel being delivered (repairable)
+    FAILURE_ONFIRE       = 1<<14,   // is currently in flames (repairable with fire extinguisher)
+    FAILURE_LEAKING      = 1<<15,   // is currently letting out some of whatever it contains (conduits etc)
   };
   enum state {
     STATE_OK,               // normal operation
@@ -36,7 +37,8 @@ public:
   std::string name;
   std::string description;
 
-  uint64_t mtbf;      // mean time between failures, in seconds
+  uint64_t mtbf;            // mean time between failures, in seconds
+  uint64_t mtbfvariation;   // how much the actual time to failure can vary from MTBF
   uint64_t time_on;   // how long it takes from activation to full function
   uint64_t time_off;  // how long it takes from deactivation to cease function
   unsigned int failuremodes;  // allowed failure modes
@@ -56,8 +58,10 @@ public:
   unsigned int required_energy_min; // how much energy it needs per second to function at all
   unsigned int required_fuel_min;   // how much fuel it needs per second to function at all
 
-  componenttype();
+  componenttype(civilisation *thisciv);
   ~componenttype();
+
+  void updatemtbf(uint64_t thismtbf, civilisation *thisciv);
 };
 
 #endif // COMPONENTTYPE_H_INCLUDED

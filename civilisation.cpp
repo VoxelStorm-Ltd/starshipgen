@@ -48,6 +48,7 @@ civilisation::civilisation(unsigned int seed) {
   artisticness    = randomgen->random_char_normal();
   religiousness   = randomgen->random_char_normal();
   fashion         = randomgen->random_char_normal();
+  precision       = randomgen->random_char_normal();
   treachery       = randomgen->random_char_normal();
   if(treachery > -honesty) {
     treachery = -honesty;

@@ -1,13 +1,151 @@
 #include "starship.h"
+#include "civilisation.h"
 
 starship::starship(unsigned int seed, civilisation *thisciv) {
   /// Constructor to generate a spaceship based on a given civilisation
-  // Decide civilisation’s technology level
-  // Decide whether to allow FTL travel
-  // Decide whether FTL travel is on-board or external
-  // Determine FTL travel method
-  // Determine number of FTL engines if any
-  // Decide on slower-than-light propulsion system
+  randomgen = new randomgenerator(seed);
+
+  // set up overall cultural factors
+  redundancy = randomgen->random_uchar_normal_biased(thisciv->wealth);  // bias redundancy by wealth
+  std::cout << "DEBUG: This ship has a redundancy level " << (unsigned int)redundancy << std::endl;
+
+  // Check if we have FTL
+  if(thisciv->invented_ftl) {
+    propulsiontype ftlpropulsion = (propulsiontype)randomgen->pick_one(
+      PROPULSION_WARPBUBBLE,
+      PROPULSION_HYPERDRIVE,
+      PROPULSION_JUMPFINS,
+      PROPULSION_WITCHSPACE,
+      PROPULSION_WORMHOLE,
+      PROPULSION_WARPGATE
+    );
+    // Decide whether FTL travel is on-board or external
+    if(propulsion == PROPULSION_WORMHOLE ||
+       propulsion == PROPULSION_WARPGATE) {
+      has_ftldrive = false;
+      std::cout << "This ship can travel faster than light by travelling through relevant anomalies" << std::endl;
+    } else {
+      has_ftldrive = true;
+      // Populate engines based on type
+      unsigned int numengines = 1;
+      switch(ftlpropulsion) {
+      case PROPULSION_WARPBUBBLE:
+        //numengines = randomgen->pick_one(1, 2, 3, 4);
+        numengines = 1 + ((double)redundancy / 255.0 * 3) + 0.5;
+        std::cout << "This ship can travel faster than light, using " << numengines << " warp bubble engines" << std::endl;
+        break;
+      case PROPULSION_HYPERDRIVE:
+        numengines = 1 + randomgen->random_bool_weighted((double)redundancy / 255.0);
+        std::cout << "This ship can travel faster than light, using " << numengines << " hyperdrives" << std::endl;
+        break;
+      case PROPULSION_JUMPFINS:
+        numengines = randomgen->pick_one(16, 32, 64, 128);
+        std::cout << "This ship can travel faster than light, using " << numengines << " jump fins" << std::endl;
+        break;
+      case PROPULSION_WITCHSPACE:
+        numengines = 1;
+        std::cout << "This ship can travel faster than light, using a witchspace jump drive" << std::endl;
+        break;
+      default:
+        std::cout << "ERROR: FTL propulsion determination error, unhandled enum " << ftlpropulsion << std::endl;
+      }
+    }
+  } else {
+    ftlpropulsion = PROPULSION_NONE;
+  }
+  // Decide on slower-than-light propulsion system appropriate to the tech level
+  if(thisciv->techlevel > 191) {
+    propulsiontype propulsion = (propulsiontype)randomgen->pick_one(
+      PROPULSION_ION,
+      PROPULSION_RAMSCOOP,
+      PROPULSION_VASIMR,
+      PROPULSION_ANTIMATTERFUSION
+    );
+  } else if(thisciv->techlevel > 127) {
+    propulsiontype propulsion = (propulsiontype)randomgen->pick_one(
+      PROPULSION_NONE,
+      PROPULSION_FUSION,
+      PROPULSION_FUSIONTHERMAL,
+      PROPULSION_ANTIMATTER,
+      PROPULSION_ION,
+      PROPULSION_RAMSCOOP,
+      PROPULSION_SAIL,
+      PROPULSION_VASIMR,
+      PROPULSION_ANTIMATTERFUSION
+    );
+  } else if(thisciv->techlevel > 63) {
+    propulsiontype propulsion = (propulsiontype)randomgen->pick_one(
+      PROPULSION_NONE,
+      PROPULSION_FUSION,
+      PROPULSION_FUSIONTHERMAL,
+      PROPULSION_FISSIONTHERMAL,
+      PROPULSION_ION,
+      PROPULSION_RAMSCOOP,
+      PROPULSION_SAIL,
+      PROPULSION_VASIMR
+    );
+  } else if(thisciv->techlevel > 16) {
+    propulsiontype propulsion = (propulsiontype)randomgen->pick_one(
+      PROPULSION_NONE,
+      PROPULSION_FUSION,
+      PROPULSION_FISSION,
+      PROPULSION_FUSIONTHERMAL,
+      PROPULSION_FISSIONTHERMAL,
+      PROPULSION_CHEMICAL,
+      PROPULSION_ION,
+      PROPULSION_SAIL,
+      PROPULSION_VASIMR
+    );
+  } else {
+    propulsiontype propulsion = (propulsiontype)randomgen->pick_one(
+      PROPULSION_FISSION,
+      PROPULSION_FISSIONTHERMAL,
+      PROPULSION_CHEMICAL
+    );
+  }
+  if(propulsion = PROPULSION_NONE) {
+    has_stldrive = false;
+    has_atmospheric = false;
+  } else {
+    unsigned int numengines = 1;
+    switch(propulsion) {
+    case PROPULSION_FUSION:
+      numengines = 1;
+      std::cout << "This ship has one fusion rocket engine" << std::endl;
+      break;
+    case PROPULSION_FISSION:
+      numengines = 1;
+      std::cout << "This ship has one dirty nuclear rocket engines" << std::endl;
+      break;
+    case PROPULSION_FUSIONTHERMAL:
+      numengines = 1 + ((double)redundancy / 255.0 * 6) + 0.5;
+      std::cout << "This ship has " << numengines << " thermal fusion nuclear rocket engines" << std::endl;
+      break;
+    case PROPULSION_FISSIONTHERMAL:
+      //numengines = randomgen->pick_one(1, 2, 3, 4);
+      numengines = 1 + ((double)redundancy / 255.0 * 3) + 0.5;
+      std::cout << "This ship has " << numengines << " thermal nuclear rocket engines" << std::endl;
+      break;
+    case PROPULSION_CHEMICAL:
+      numengines = randomgen->pick_one(5, 6, 8, 9, 30);
+      std::cout << "This ship has " << numengines << " old-fashioned chemical rocket engines" << std::endl;
+      break;
+    case PROPULSION_ANTIMATTER:
+      break;
+    case PROPULSION_ION:
+      break;
+    case PROPULSION_RAMSCOOP:
+      break;
+    case PROPULSION_SAIL:
+      break;
+    case PROPULSION_VASIMR:
+      break;
+    case PROPULSION_ANTIMATTERFUSION:
+      break;
+    default:
+      std::cout << "ERROR: STL propulsion determination error, unhandled enum " << stlpropulsion << std::endl;;
+    }
+  }
   // Decide on power system
   // Determine type of power transmission used
   // Decide number of slower than light engines

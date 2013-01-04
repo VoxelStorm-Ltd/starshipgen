@@ -52,7 +52,7 @@ public:
   unsigned char vuln_vacuum;      // how vulnerable it is to underpressure
   unsigned char flammability;     // how likely it is to catch on fire from nearby objects
   unsigned char explosiveness;    // how likely it is to explode if ignited, heated or shot
-  unsigned int explosivepower;    // how much damage it does if exploding
+  unsigned int explosivepower;    // how much damage it does if exploding (equiv grams of TNT)
   unsigned int required_energy;     // how much energy it needs per second to function correctly
   unsigned int required_fuel;       // how much fuel it needs per second to function correctly
   unsigned int required_energy_min; // how much energy it needs per second to function at all

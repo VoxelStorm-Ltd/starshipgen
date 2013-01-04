@@ -2,7 +2,7 @@
 #define CIVILISATION_H_INCLUDED
 
 #include <string>
-#include <boost/random/mersenne_twister.hpp>
+#include "randomgen.h"
 
 class civilisation {
 public:
@@ -58,17 +58,10 @@ public:
   char stimulant_use;   // predilection to using stimulants for work (caffeine, amphetamines)
   char drug_use;        // predilection to using narcotic drugs (incapacitating for work)
 
-  // random generator features
-  boost::mt19937 randomgen;   // merseinne twister
+  randomgenerator *randomgen;
 
   civilisation(unsigned int seed);
   ~civilisation();
-  bool random_bool();
-  bool random_bool_weighted(double weight_true);
-  char random_char();
-  char random_char_normal();
-  unsigned char random_uchar();
-  unsigned char random_uchar_normal();
   std::string describe();
 };
 

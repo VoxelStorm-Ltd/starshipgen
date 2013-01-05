@@ -133,12 +133,14 @@ starship::starship(unsigned int seed,
       // lasers
       // magnetic nozzle
       // exhaust plasma tapping induction coils
+      parts.push_back(new component(componenttypes->getcomponent("engine_fusionrocket"), this));
       parts.push_back(new component(componenttypes->getcomponent("engine_rocket_nozzle"), this));
       break;
     case PROPULSION_FISSION:
       numengines = 1;
       has_atmospheric = true;
       std::cout << "This ship has one external nuclear pulse rocket engine." << std::endl;
+      parts.push_back(new component(componenttypes->getcomponent("engine_nuclearpulse"), this));
       // radiation shielding
       // nuclear pulse unit magazines
       // ejector gas tank
@@ -159,6 +161,7 @@ starship::starship(unsigned int seed,
         // inertial confinement reactor core
         // plasma compression guns
         // external disc shield
+        parts.push_back(new component(componenttypes->getcomponent("engine_thermalfusion"), this));
         unsigned int numturbopumps = 1 + ((double)civ->redundancy / 255.0 * 4) + 0.5;
         for(unsigned int i = 0; i < numturbopumps; ++i) {
           parts.push_back(new component(componenttypes->getcomponent("turbopump"), this));
@@ -183,6 +186,7 @@ starship::starship(unsigned int seed,
       numengines = randomgen->pick_one(1, 2, 3, 4);
       has_atmospheric = true;
       std::cout << "This ship has " << numengines << " fission fragment nuclear rocket engines." << std::endl;
+      parts.push_back(new component(componenttypes->getcomponent("engine_fissionfragment"), this));
       // fissionable fuel disks
       // reactor core
       // fragment exhaust
@@ -190,7 +194,7 @@ starship::starship(unsigned int seed,
       // containment field generator
       // induction coils
       // decelerator
-      // thermonuclear generator
+      parts.push_back(new component(componenttypes->getcomponent("generator_thermonuclear"), this));
       break;
     case PROPULSION_CHEMICAL:
       {
@@ -203,7 +207,7 @@ starship::starship(unsigned int seed,
         for(unsigned int i = 0; i < numturbopumps; ++i) {
           parts.push_back(new component(componenttypes->getcomponent("turbopump"), this));
         }
-        // chemical rocket motor
+        parts.push_back(new component(componenttypes->getcomponent("engine_rocket_motor"), this));
         parts.push_back(new component(componenttypes->getcomponent("engine_rocket_nozzle"), this));
       }
       break;
@@ -212,16 +216,18 @@ starship::starship(unsigned int seed,
       has_atmospheric = true;
       std::cout << "This ship has one matter/antimatter annihilation rocket engine." << std::endl;
       parts.push_back(new component(componenttypes->getcomponent("fueltank_hydrogen"), this));
-      // antimatter confinement system
-      // reactor core
-      // magnetic nozzle
+      parts.push_back(new component(componenttypes->getcomponent("fueltank_antimatter"), this));
+
+      parts.push_back(new component(componenttypes->getcomponent("engine_antimatter_reactor"), this));
+      parts.push_back(new component(componenttypes->getcomponent("engine_magnetic_nozzle"), this));
       break;
     case PROPULSION_ANTIMATTERFUSION:
       numengines = 1;
       has_atmospheric = true;
       std::cout << "This ship is equipped with an antimatter catalyzed nuclear pulse engine." << std::endl;
       parts.push_back(new component(componenttypes->getcomponent("fueltank_hydrogen"), this));
-      // antimatter confinement system
+      parts.push_back(new component(componenttypes->getcomponent("fueltank_antimatter"), this));
+      parts.push_back(new component(componenttypes->getcomponent("engine_antimatterfusion"), this));
       // radiation shielding
       // nuclear pulse microfusion unit magazines
       // ejector gas tank
@@ -235,15 +241,16 @@ starship::starship(unsigned int seed,
       numengines = randomgen->pick_one(1, 2, 3, 4);
       has_atmospheric = false;
       std::cout << "This ship is equipped with " << numengines << " electric ion thrusters." << std::endl;
-      // xenon fuel source
-      // engine
+      parts.push_back(new component(componenttypes->getcomponent("fueltank_xenon"), this));
+      parts.push_back(new component(componenttypes->getcomponent("engine_ion"), this));
       // electric engine nozzle
       break;
     case PROPULSION_RAMSCOOP:
       numengines = 1;
       has_atmospheric = false;
       std::cout << "This ship is equipped with a Bussard ramscoop engine." << std::endl;
-      // ionising forward laser
+      parts.push_back(new component(componenttypes->getcomponent("weapon_laser_ionising"), this));
+      parts.push_back(new component(componenttypes->getcomponent("engine_ramscoop"), this));
       // electrostatic field generators
       // collector
       // fusion chamber
@@ -253,13 +260,14 @@ starship::starship(unsigned int seed,
       numengines = 1;
       has_atmospheric = false;
       std::cout << "This ship is equipped with a solar sail." << std::endl;
-      // sail tether points
+      parts.push_back(new component(componenttypes->getcomponent("engine_sail"), this));
       break;
     case PROPULSION_VASIMR:
       numengines = randomgen->pick_one(2, 4);
       has_atmospheric = false;
       std::cout << "This ship has " << numengines << " Variable Specific Impulse Magnetoplasma Rocket (VASIMR) engines." << std::endl;
-      // argon fuel source
+      parts.push_back(new component(componenttypes->getcomponent("fueltank_argon"), this));
+      parts.push_back(new component(componenttypes->getcomponent("engine_vasimr"), this));
       // RF generators
       // injector
       // helicon coupler

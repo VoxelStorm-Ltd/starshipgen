@@ -23,7 +23,7 @@ component::component(componenttype *thiscomponenttype, starship *thisship) {
     componenttype *thisparttype = thisship->componenttypes->getcomponent(*i);
     if(thisparttype != NULL) {
       component *thiscomponent = new component(thisparttype, thisship);
-      std::cout << "  DEBUG: component " << thiscomponent->thistype->name << " is part of " << thistype->name << std::endl;
+      //std::cout << "  DEBUG: component " << thiscomponent->thistype->name << " is part of " << thistype->name << std::endl;
       parts.push_back(thiscomponent);
     } else {
       std::cout << "  ERROR: unknown component " << *i << " is part of " << thistype->name << std::endl;

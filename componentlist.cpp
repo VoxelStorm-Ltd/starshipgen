@@ -331,7 +331,7 @@ void componentlist::populate_componentlist() {
   thiscomponent->vuln_heat           = 255;
   thiscomponent->vuln_cold           = 0;
   thiscomponent->vuln_shock          = 127;
-  thiscomponent->vuln_pressure       = 255;
+  thiscomponent->vuln_pressure       = 0;
   thiscomponent->vuln_vacuum         = 0;
   thiscomponent->flammability        = 255;
   thiscomponent->explosiveness       = 255;
@@ -352,11 +352,31 @@ void componentlist::populate_componentlist() {
   thiscomponent->vuln_heat           = 255;
   thiscomponent->vuln_cold           = 0;
   thiscomponent->vuln_shock          = 127;
-  thiscomponent->vuln_pressure       = 255;
+  thiscomponent->vuln_pressure       = 0;
   thiscomponent->vuln_vacuum         = 0;
   thiscomponent->flammability        = 255;
   thiscomponent->explosiveness       = 255;
   thiscomponent->explosivepower      = 10000; // 10KG TNT
+  typelist->push_back(thiscomponent);
+
+  thiscomponent = new componenttype(civ);
+  thiscomponent->id = "fueltank_argon";
+  thiscomponent->name = "liquid argon tank";
+  thiscomponent->description = "Argon is a chemical element with symbol Ar and atomic number 18. It is in group 18 (noble gases) of the periodic table. Argon is the third most common gas in the Earth's atmosphere, at 0.93% (9,300 ppm), making it approximately 23.8 times as abundant as next most common atmospheric gas, carbon dioxide (390 ppm), and more than 500 times as abundant as the next most common noble gas, neon (18 ppm). Nearly all of this argon is radiogenic argon-40 derived from the decay of potassium-40 in the Earth's crust. In the universe, argon-36 is by far the most common argon isotope, being the preferred argon isotope produced by stellar nucleosynthesis in supernovas.";
+  thiscomponent->updatemtbf(50000, civ);
+  thiscomponent->failuremodes = componenttype::FAILURE_NONE |
+                                componenttype::FAILURE_DISCONNECTED;;
+  thiscomponent->vuln_mechanical     = 127;
+  thiscomponent->vuln_electric       = 0;
+  thiscomponent->vuln_laser          = 127;
+  thiscomponent->vuln_heat           = 255;
+  thiscomponent->vuln_cold           = 0;
+  thiscomponent->vuln_shock          = 127;
+  thiscomponent->vuln_pressure       = 0;
+  thiscomponent->vuln_vacuum         = 0;
+  thiscomponent->flammability        = 0;
+  thiscomponent->explosiveness       = 63;
+  thiscomponent->explosivepower      = 1000; // 1KG TNT
   typelist->push_back(thiscomponent);
 }
 

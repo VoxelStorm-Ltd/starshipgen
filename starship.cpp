@@ -11,6 +11,8 @@ starship::starship(unsigned int seed,
   civ = thisciv;
   componenttypes = thiscomponenttypes;
 
+  shipclock = 0;
+
   // set up overall cultural factors
   std::cout << "DEBUG: This ship has a redundancy level " << (unsigned int)civ->redundancy << std::endl;
 
@@ -167,16 +169,12 @@ starship::starship(unsigned int seed,
         std::cout << "Info: " << componenttypes->getcomponent("engine_thermalnuclear")->description << std::endl;
         for(unsigned int i = 0; i < numengines; ++i) {
           component *thisengine = new component(componenttypes->getcomponent("engine_thermalnuclear"), this);
-          // hydrogen fuel source
-          // reactor core
-          // control drum
-          // reflector
-          // internal shield
-          // external disc shield
-          // turbopumps
-          // exhaust nozzle
           parts.push_back(thisengine);
         }
+        component *tank1 = new component(componenttypes->getcomponent("fueltank_oxygen"), this);
+        component *tank2 = new component(componenttypes->getcomponent("fueltank_hydrogen"), this);
+        parts.push_back(tank1);
+        parts.push_back(tank2);
       }
       break;
     case PROPULSION_FISSIONFRAGMENT:

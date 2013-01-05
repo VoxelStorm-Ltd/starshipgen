@@ -3,6 +3,10 @@
 
 #include <vector>
 #include <string>
+//class componenttype;
+//enum class state;
+//enum class failuremode;
+// The above requires C++0x (and a base type)
 #include "componenttype.h"
 class starship;
 

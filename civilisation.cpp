@@ -102,6 +102,8 @@ civilisation::civilisation(unsigned int seed) {
     deathpenalty = true;
     drugs_legal = false;
   }
+
+  redundancy = randomgen->random_uchar_normal_biased(wealth);  // bias redundancy by wealth
 }
 
 civilisation::~civilisation() {

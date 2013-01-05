@@ -60,6 +60,8 @@ public:
   char stimulant_use;   // predilection to using stimulants for work (caffeine, amphetamines)
   char drug_use;        // predilection to using narcotic drugs (incapacitating for work)
 
+  unsigned char redundancy;       // overall redundancy factor
+
   randomgenerator *randomgen;
 
   civilisation(unsigned int seed);

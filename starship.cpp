@@ -1,7 +1,11 @@
 #include "starship.h"
 #include "civilisation.h"
+#include "componentlist.h"
+#include "component.h"
 
-starship::starship(unsigned int seed, civilisation *thisciv, std::vector<componenttype*> componenttypelist) {
+starship::starship(unsigned int seed,
+                   civilisation *thisciv,
+                   componentlist *componenttypes) {
   /// Constructor to generate a spaceship based on a given civilisation
   randomgen = new randomgenerator(seed);
   civ = thisciv;
@@ -156,17 +160,22 @@ starship::starship(unsigned int seed, civilisation *thisciv, std::vector<compone
       // exhaust nozzle
       break;
     case PROPULSION_FISSIONTHERMAL:
-      numengines = 1 + ((double)redundancy / 255.0 * 3) + 0.5;
-      has_atmospheric = true;
-      std::cout << "This ship has " << numengines << " thermal nuclear rocket engines." << std::endl;
-      // hydrogen fuel source
-      // reactor core
-      // control drum
-      // reflector
-      // internal shield
-      // external disc shield
-      // turbopumps
-      // exhaust nozzle
+      {
+        numengines = 1 + ((double)redundancy / 255.0 * 3) + 0.5;
+        has_atmospheric = true;
+        std::cout << "This ship has " << numengines << " thermal nuclear rocket engines." << std::endl;
+        std::cout << "Info: " << componenttypes->getcomponent("engine_thermalnuclear")->description;
+        component *thisengine = new component(componenttypes->getcomponent("engine_thermalnuclear"), this);
+        //parts.push_back();
+        // hydrogen fuel source
+        // reactor core
+        // control drum
+        // reflector
+        // internal shield
+        // external disc shield
+        // turbopumps
+        // exhaust nozzle
+      }
       break;
     case PROPULSION_FISSIONFRAGMENT:
       numengines = randomgen->pick_one(1, 2, 3, 4);

@@ -3,10 +3,12 @@
 
 #include <vector>
 #include <string>
-#include "randomgen.h"
-#include "component.h"
-#include "dependency.h"
-#include "civilisation.h"
+class randomgenerator;
+class component;
+class componentlist;
+class componenttype;
+class dependency;
+class civilisation;
 
 class starship {
 public:
@@ -54,7 +56,9 @@ public:
   std::vector<component*> parts;          // the ship's constituent component parts
   std::vector<dependency*> dependencies;  // all shipboard interdependencies
 
-  starship(unsigned int seed, civilisation *thisciv, std::vector<componenttype*> thiscomponenttypelist);
+  uint64_t shipclock;             // ship's clock, in seconds since ship's epoch
+
+  starship(unsigned int seed, civilisation *thisciv, componentlist *componenttypest);
   ~starship();
   std::string describe();
 };

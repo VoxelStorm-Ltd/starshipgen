@@ -42,7 +42,6 @@ public:
     ENERGY_SOLARPANEL,            // Solar panel
   };
 
-  unsigned char redundancy;       // overall redundancy factor
   bool has_ftldrive;              // can it go faster than light under its own power?
   bool has_stldrive;              // can it travel under its own power slower than light?
   bool has_atmospheric;           // can it fly in an atmosphere without destruction?
@@ -52,7 +51,7 @@ public:
   randomgenerator *randomgen;
 
   civilisation *civ;                      // pointer to the owner civilisation
-  std::vector<componenttype> componenttypelist;   // the list of all component types
+  componentlist *componenttypes;          // pointer to the components list
   std::vector<component*> parts;          // the ship's constituent component parts
   std::vector<dependency*> dependencies;  // all shipboard interdependencies
 

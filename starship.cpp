@@ -5,14 +5,14 @@
 
 starship::starship(unsigned int seed,
                    civilisation *thisciv,
-                   componentlist *componenttypes) {
+                   componentlist *thiscomponenttypes) {
   /// Constructor to generate a spaceship based on a given civilisation
   randomgen = new randomgenerator(seed);
   civ = thisciv;
+  componenttypes = thiscomponenttypes;
 
   // set up overall cultural factors
-  redundancy = randomgen->random_uchar_normal_biased(civ->wealth);  // bias redundancy by wealth
-  std::cout << "DEBUG: This ship has a redundancy level " << (unsigned int)redundancy << std::endl;
+  std::cout << "DEBUG: This ship has a redundancy level " << (unsigned int)civ->redundancy << std::endl;
 
   // Check if we have FTL
   if(civ->invented_ftl) {
@@ -36,11 +36,11 @@ starship::starship(unsigned int seed,
       switch(ftlpropulsion) {
       case PROPULSION_WARPBUBBLE:
         //numengines = randomgen->pick_one(1, 2, 3, 4);
-        numengines = 1 + ((double)redundancy / 255.0 * 3) + 0.5;
+        numengines = 1 + ((double)civ->redundancy / 255.0 * 3) + 0.5;
         std::cout << "This ship can travel faster than light, using " << numengines << " warp bubble engines." << std::endl;
         break;
       case PROPULSION_HYPERDRIVE:
-        numengines = 1 + randomgen->random_bool_weighted((double)redundancy / 255.0);
+        numengines = 1 + randomgen->random_bool_weighted((double)civ->redundancy / 255.0);
         std::cout << "This ship can travel faster than light, using " << numengines << " hyperdrives." << std::endl;
         break;
       case PROPULSION_JUMPFINS:
@@ -149,7 +149,7 @@ starship::starship(unsigned int seed,
       // pusher plate
       break;
     case PROPULSION_FUSIONTHERMAL:
-      numengines = 1 + ((double)redundancy / 255.0 * 6) + 0.5;
+      numengines = 1 + ((double)civ->redundancy / 255.0 * 6) + 0.5;
       has_atmospheric = true;
       std::cout << "This ship has " << numengines << " thermal fusion nuclear rocket engines." << std::endl;
       // hydrogen fuel source
@@ -161,20 +161,22 @@ starship::starship(unsigned int seed,
       break;
     case PROPULSION_FISSIONTHERMAL:
       {
-        numengines = 1 + ((double)redundancy / 255.0 * 3) + 0.5;
+        numengines = 1 + ((double)civ->redundancy / 255.0 * 3) + 0.5;
         has_atmospheric = true;
         std::cout << "This ship has " << numengines << " thermal nuclear rocket engines." << std::endl;
-        std::cout << "Info: " << componenttypes->getcomponent("engine_thermalnuclear")->description;
-        component *thisengine = new component(componenttypes->getcomponent("engine_thermalnuclear"), this);
-        //parts.push_back();
-        // hydrogen fuel source
-        // reactor core
-        // control drum
-        // reflector
-        // internal shield
-        // external disc shield
-        // turbopumps
-        // exhaust nozzle
+        std::cout << "Info: " << componenttypes->getcomponent("engine_thermalnuclear")->description << std::endl;
+        for(unsigned int i = 0; i < numengines; ++i) {
+          component *thisengine = new component(componenttypes->getcomponent("engine_thermalnuclear"), this);
+          // hydrogen fuel source
+          // reactor core
+          // control drum
+          // reflector
+          // internal shield
+          // external disc shield
+          // turbopumps
+          // exhaust nozzle
+          parts.push_back(thisengine);
+        }
       }
       break;
     case PROPULSION_FISSIONFRAGMENT:

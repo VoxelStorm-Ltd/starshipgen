@@ -14,7 +14,7 @@ int main() {
 
   componentlist *thiscomponentlist = new componentlist(thisciv);
 
-  starship *thisship = new starship(2, thisciv, thiscomponentlist);
+  starship *thisship = new starship(4, thisciv, thiscomponentlist);
   cout << thisship->describe() << endl;
 
   return 0;

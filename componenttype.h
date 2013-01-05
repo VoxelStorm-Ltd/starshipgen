@@ -1,6 +1,7 @@
 #ifndef COMPONENTTYPE_H_INCLUDED
 #define COMPONENTTYPE_H_INCLUDED
 
+#include <vector>
 #include <string>
 class civilisation;
 
@@ -38,6 +39,8 @@ public:
   std::string name;         // player-visible name
   std::string description;  // player-visible description
 
+  std::vector<std::string> parts; // the ids of its constituent component parts
+
   uint64_t mtbf;            // mean time between failures, in seconds
   uint64_t mtbfvariation;   // how much the actual time to failure can vary from MTBF
   uint64_t time_on;   // how long it takes from activation to full function
@@ -54,8 +57,8 @@ public:
   unsigned char flammability;     // how likely it is to catch on fire from nearby objects
   unsigned char explosiveness;    // how likely it is to explode if ignited, heated or shot
   unsigned int explosivepower;    // how much damage it does if exploding (equiv grams of TNT)
-  unsigned int required_energy;     // how much energy it needs per second to function correctly
-  unsigned int required_fuel;       // how much fuel it needs per second to function correctly
+  unsigned int required_energy;     // how much energy it needs per second to function correctly (Watts)
+  unsigned int required_fuel;       // how much fuel it needs per second to function correctly (units depend on fuel type)
   unsigned int required_energy_min; // how much energy it needs per second to function at all
   unsigned int required_fuel_min;   // how much fuel it needs per second to function at all
 

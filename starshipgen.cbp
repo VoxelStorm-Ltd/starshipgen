@@ -38,6 +38,7 @@
 		<Unit filename="civilisation_describe.cpp" />
 		<Unit filename="component.cpp" />
 		<Unit filename="component.h" />
+		<Unit filename="componentlist.cpp" />
 		<Unit filename="componentlist.h" />
 		<Unit filename="componenttype.cpp" />
 		<Unit filename="componenttype.h" />

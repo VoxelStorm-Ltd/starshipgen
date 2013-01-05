@@ -12,10 +12,9 @@ int main() {
   civilisation *thisciv = new civilisation(1);
   cout << thisciv->describe() << endl;
 
-  std::vector<componenttype*> componenttypelist;
-  populate_componentlist(componenttypelist, thisciv);
+  componentlist *thiscomponentlist = new componentlist(thisciv);
 
-  starship *thisship = new starship(2, thisciv, componenttypelist);
+  starship *thisship = new starship(2, thisciv, thiscomponentlist);
   cout << thisship->describe() << endl;
 
   return 0;

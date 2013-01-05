@@ -1,4 +1,5 @@
 #include "componenttype.h"
+#include "civilisation.h"
 
 componenttype::componenttype(civilisation *thisciv) {
   name = "Widget";

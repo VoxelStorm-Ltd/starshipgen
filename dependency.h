@@ -2,7 +2,7 @@
 #define DEPENDENCY_H_INCLUDED
 
 #include <vector>
-#include "component.h"
+class component;
 
 class dependency {
 public:

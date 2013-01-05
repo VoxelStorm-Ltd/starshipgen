@@ -2,7 +2,7 @@
 #define COMPONENTTYPE_H_INCLUDED
 
 #include <string>
-#include "civilisation.h"
+class civilisation;
 
 class componenttype {
 public:

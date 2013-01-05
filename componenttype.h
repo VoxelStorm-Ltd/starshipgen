@@ -34,8 +34,9 @@ public:
     STATE_ABSENT,           // it's just not there, requires replacement (but nothing to remove)
   };
 
-  std::string name;
-  std::string description;
+  std::string id;           // search-friendly name
+  std::string name;         // player-visible name
+  std::string description;  // player-visible description
 
   uint64_t mtbf;            // mean time between failures, in seconds
   uint64_t mtbfvariation;   // how much the actual time to failure can vary from MTBF

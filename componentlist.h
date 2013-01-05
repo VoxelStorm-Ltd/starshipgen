@@ -3,16 +3,17 @@
 
 #include <vector>
 #include "componenttype.h"
-// This file must NOT be included by any other in-project files
+// This file must NOT be included by any other in-project files except main
 
 void populate_componentlist(std::vector<componenttype*> componenttypelist, civilisation *thisciv) {
   componenttype *thiscomponent;
   thiscomponent = new componenttype(thisciv);
+  thiscomponent->id = "engine_thermalnuclear";
   thiscomponent->name = "Thermal nuclear rocket engine";
   thiscomponent->description = "In a nuclear thermal rocket a working fluid, usually liquid hydrogen, is heated to a high temperature in a nuclear reactor, and then expands through a rocket nozzle to create thrust. In this kind of thermal rocket, the nuclear reactor's energy replaces the chemical energy of the propellant's reactive chemicals in a chemical rocket. Due to the higher energy density of the nuclear fuel compared to chemical fuels, about 10^7 times, the resulting propellant efficiency (effective exhaust velocity) of the engine is at least twice as good as chemical engines.";
   thiscomponent->updatemtbf(1000, thisciv);
-  thiscomponent->time_on             = 60 * 4;
-  thiscomponent->time_off            = 60 * 16;
+  thiscomponent->time_on      = 60 * 4;
+  thiscomponent->time_off     = 60 * 16;
   thiscomponent->failuremodes = componenttype::FAILURE_NONE |
                                 componenttype::FAILURE_DEACTIVATED |
                                 componenttype::FAILURE_DISCONNECTED |
@@ -45,6 +46,18 @@ void populate_componentlist(std::vector<componenttype*> componenttypelist, civil
   thiscomponent->required_energy_min = 0;
   thiscomponent->required_fuel_min   = 500;
   componenttypelist.push_back(thiscomponent);
+}
+
+componenttype *getcomponent(std::vector<componenttype*> componenttypelist, std::string thisid) {
+  /// Return a pointer to the component in the list with a given id
+  std::vector<componenttype*>::iterator i;
+
+  for(i = componenttypelist.begin(); i != componenttypelist.end(); ++i) {
+    if((*i)->id.compare(thisid) == 0) {
+      return *i;
+    }
+  }
+  return NULL;
 }
 
 #endif // COMPONENTLIST_H_INCLUDED

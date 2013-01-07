@@ -66,34 +66,80 @@ void componentlist::populate_componentlist() {
   typelist->push_back(thiscomponent);
 
   thiscomponent = new componenttype(civ);
-  thiscomponent->id = "turbopump";
-  thiscomponent->name = "turbopump";
-  thiscomponent->description = "A turbopump is a propellant pump that comprises basically two main components: a rotodynamic pump and a driving gas turbine, usually both mounted on the same shaft, or sometimes geared together. The purpose of a turbopump is to produce a high pressure fluid for feeding a combustion chamber or other use.";
-  thiscomponent->updatemtbf(25000 * 3600, civ);
-  thiscomponent->time_on      = 60;
-  thiscomponent->time_off     = 120;
+  thiscomponent->id = "engine_ion";
+  thiscomponent->name = "ion thruster";
+  thiscomponent->description = "In a nuclear thermal rocket a working fluid, usually liquid hydrogen, is heated to a high temperature in a nuclear reactor, and then expands through a rocket nozzle to create thrust. In this kind of thermal rocket, the nuclear reactor's energy replaces the chemical energy of the propellant's reactive chemicals in a chemical rocket. Due to the higher energy density of the nuclear fuel compared to chemical fuels, about 10^7 times, the resulting propellant efficiency (effective exhaust velocity) of the engine is at least twice as good as chemical engines.";
+  thiscomponent->updatemtbf(1000, civ);
+  thiscomponent->time_on      = 60 * 4;
+  thiscomponent->time_off     = 60 * 16;
   thiscomponent->failuremodes = componenttype::FAILURE_NONE |
+                                componenttype::FAILURE_DEACTIVATED |
                                 componenttype::FAILURE_DISCONNECTED |
                                 componenttype::FAILURE_LEAKING |
                                 componenttype::FAILURE_NOFUEL |
                                 componenttype::FAILURE_NOPOWER |
                                 componenttype::FAILURE_ONFIRE |
+                                componenttype::FAILURE_RANDOM |
+                                componenttype::FAILURE_SLOWOFF |
                                 componenttype::FAILURE_SLOWON |
                                 componenttype::FAILURE_STUCKOFF |
+                                componenttype::FAILURE_STUCKON |
+                                componenttype::FAILURE_SURGING |
+                                componenttype::FAILURE_TOGGLING |
                                 componenttype::FAILURE_UNDERFUEL |
                                 componenttype::FAILURE_UNDERPOWER;
+  thiscomponent->vuln_mechanical     = 20;
+  thiscomponent->vuln_electric       = 10;
+  thiscomponent->vuln_laser          = 20;
+  thiscomponent->vuln_heat           = 10;
+  thiscomponent->vuln_cold           = 0;
+  thiscomponent->vuln_shock          = 10;
+  thiscomponent->vuln_pressure       = 30;
+  thiscomponent->vuln_vacuum         = 0;
+  thiscomponent->flammability        = 10;
+  thiscomponent->explosiveness       = 0;
+  thiscomponent->explosivepower      = 0;
+  thiscomponent->required_energy     = 0;
+  thiscomponent->required_fuel       = 2394;  // milligrams of fuel
+  thiscomponent->required_energy_min = 0;
+  thiscomponent->required_fuel_min   = 500;
+  typelist->push_back(thiscomponent);
+
+  thiscomponent = new componenttype(civ);
+  thiscomponent->id = "turbopump";
+  thiscomponent->name = "turbopump";
+  thiscomponent->description = "An ion thruster is a form of electric propulsion used for spacecraft propulsion that creates thrust by accelerating ions. Ion thrusters create very small levels of thrust compared to conventional chemical rockets but achieve very high specific impulse, or propellant mass efficiencies, by accelerating their exhausts to very high speed. However, ion thrusters carry a fundamental price: the power imparted to the exhaust increases with the square of its velocity while the thrust increases only linearly.";
+  thiscomponent->updatemtbf(250000 * 3600, civ);
+  thiscomponent->time_on      = 60;
+  thiscomponent->time_off     = 120;
+  thiscomponent->failuremodes = FAILURE_NONE |
+                                FAILURE_DEACTIVATED |
+                                FAILURE_DISCONNECTED |
+                                FAILURE_SURGING |
+                                FAILURE_STUCKON |
+                                FAILURE_STUCKOFF |
+                                FAILURE_TOGGLING |
+                                FAILURE_RANDOM |
+                                FAILURE_SLOWON |
+                                FAILURE_SLOWOFF |
+                                FAILURE_NOPOWER |
+                                FAILURE_NOFUEL |
+                                FAILURE_UNDERPOWER |
+                                FAILURE_UNDERFUEL |
+                                FAILURE_ONFIRE |
+                                FAILURE_LEAKING;
   thiscomponent->vuln_mechanical     = 128;
-  thiscomponent->vuln_electric       = 0;
-  thiscomponent->vuln_laser          = 10;
-  thiscomponent->vuln_heat           = 32;
-  thiscomponent->vuln_cold           = 32;
-  thiscomponent->vuln_shock          = 128;
+  thiscomponent->vuln_electric       = 191;
+  thiscomponent->vuln_laser          = 128;
+  thiscomponent->vuln_heat           = 128;
+  thiscomponent->vuln_cold           = 0;
+  thiscomponent->vuln_shock          = 191;
   thiscomponent->vuln_pressure       = 16;
   thiscomponent->vuln_vacuum         = 0;
   thiscomponent->flammability        = 10;
-  thiscomponent->explosiveness       = 20;
-  thiscomponent->explosivepower      = 1000;  // 1kg of TNT
-  thiscomponent->required_energy     = 45000; // 60BHP ~= 45kW
+  thiscomponent->explosiveness       = 0;
+  thiscomponent->explosivepower      = 0;
+  thiscomponent->required_energy     = 103500000; // 103MW for galaxy-class (1000kg ~ 2.3kW NSTAR)
   thiscomponent->required_fuel       = 2394 / int((civ->redundancy * 4 / 255) + 0.5); // matching cultural redundancy factor
   thiscomponent->required_energy_min = 4500;  // 6BHP ~= 4.5kW
   thiscomponent->required_fuel_min   = 0;
@@ -363,6 +409,26 @@ void componentlist::populate_componentlist() {
   thiscomponent->id = "fueltank_argon";
   thiscomponent->name = "liquid argon tank";
   thiscomponent->description = "Argon is a chemical element with symbol Ar and atomic number 18. It is in group 18 (noble gases) of the periodic table. Argon is the third most common gas in the Earth's atmosphere, at 0.93% (9,300 ppm), making it approximately 23.8 times as abundant as next most common atmospheric gas, carbon dioxide (390 ppm), and more than 500 times as abundant as the next most common noble gas, neon (18 ppm). Nearly all of this argon is radiogenic argon-40 derived from the decay of potassium-40 in the Earth's crust. In the universe, argon-36 is by far the most common argon isotope, being the preferred argon isotope produced by stellar nucleosynthesis in supernovas.";
+  thiscomponent->updatemtbf(50000, civ);
+  thiscomponent->failuremodes = componenttype::FAILURE_NONE |
+                                componenttype::FAILURE_DISCONNECTED;;
+  thiscomponent->vuln_mechanical     = 127;
+  thiscomponent->vuln_electric       = 0;
+  thiscomponent->vuln_laser          = 127;
+  thiscomponent->vuln_heat           = 255;
+  thiscomponent->vuln_cold           = 0;
+  thiscomponent->vuln_shock          = 127;
+  thiscomponent->vuln_pressure       = 0;
+  thiscomponent->vuln_vacuum         = 0;
+  thiscomponent->flammability        = 0;
+  thiscomponent->explosiveness       = 63;
+  thiscomponent->explosivepower      = 1000; // 1KG TNT
+  typelist->push_back(thiscomponent);
+
+  thiscomponent = new componenttype(civ);
+  thiscomponent->id = "fueltank_xenon";
+  thiscomponent->name = "liquid xenon tank";
+  thiscomponent->description = "Xenon is a chemical element with the symbol Xe and atomic number 54. It is a colorless, heavy, odorless noble gas, that occurs in the Earth's atmosphere in trace amounts. Although generally unreactive, xenon can undergo a few chemical reactions such as the formation of xenon hexafluoroplatinate, the first noble gas compound to be synthesized. Xenon is used in flash lamps and arc lamps, and as a general anesthetic. The first excimer laser design used a xenon dimer molecule (Xe2) as its lasing medium, and the earliest laser designs used xenon flash lamps as pumps. Xenon is also being used to search for hypothetical weakly interacting massive particles[19] and as the propellant for ion thrusters in spacecraft.";
   thiscomponent->updatemtbf(50000, civ);
   thiscomponent->failuremodes = componenttype::FAILURE_NONE |
                                 componenttype::FAILURE_DISCONNECTED;;

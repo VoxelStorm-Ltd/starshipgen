@@ -1,0 +1,6 @@
+obj
+*.depend
+*.layout
+Thumbs.db
+bin/Debug/*
+bin/Debug_64/*

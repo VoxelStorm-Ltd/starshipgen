@@ -187,9 +187,9 @@ void componentlist::populate_componentlist() {
     thiscomponent->flammability        = 10;
     thiscomponent->explosiveness       = 0;
     thiscomponent->explosivepower      = 0;
-    thiscomponent->required_energy     = 103500000; // 103MW for galaxy-class (1000kg ~ 2.3kW NSTAR)
+    thiscomponent->required_energy     = 103500000; // 103MW for galaxy-class (1000kg ~ 2.3KW NSTAR)
     thiscomponent->required_fuel       = 2394 / int((civ->redundancy * 4 / 255) + 0.5); // matching cultural redundancy factor
-    thiscomponent->required_energy_min = 4500;  // 6BHP ~= 4.5kW
+    thiscomponent->required_energy_min = 4500;  // 6BHP ~= 4.5KW
     thiscomponent->required_fuel_min   = 0;
     thiscomponent->parts.push_back("fan_impeller");
     thiscomponent->parts.push_back("fan_turbine");
@@ -460,7 +460,7 @@ void componentlist::populate_componentlist() {
   }
   {
     thiscomponent = new componenttype(civ);
-    thiscomponent->id = "motor_linear_1kw";
+    thiscomponent->id = "motor_linear_1KW";
     thiscomponent->name = "linear actuator";
     thiscomponent->description = "A linear actuator is an actuator that creates motion in a straight line, as contrasted with circular motion of a conventional electric motor. Linear actuators are used in machine tools and industrial machinery, in computer peripherals such as disk drives and printers, in valves and dampers, and in many other places where linear motion is required.";
     thiscomponent->updatemtbf((uint64_t)10000 * 3600, civ);
@@ -495,7 +495,7 @@ void componentlist::populate_componentlist() {
   }
   {
     thiscomponent = new componenttype(civ);
-    thiscomponent->id = "motor_rotary_1kw";
+    thiscomponent->id = "motor_rotary_1KW";
     thiscomponent->name = "electric motor";
     thiscomponent->description = "An electric motor is an electric machine that converts electrical energy into mechanical energy, operating through the interaction between an electric motor's magnetic field and winding currents to generate force within the motor.";
     thiscomponent->updatemtbf((uint64_t)10000 * 3600, civ);
@@ -534,8 +534,8 @@ void componentlist::populate_componentlist() {
   }
   {
     thiscomponent = new componenttype(civ);
-    thiscomponent->id = "motor_rotary_10kw";
-    thiscomponent->name = "10kW electric motor";
+    thiscomponent->id = "motor_rotary_10KW";
+    thiscomponent->name = "10KW electric motor";
     thiscomponent->description = "An electric motor is an electric machine that converts electrical energy into mechanical energy, operating through the interaction between an electric motor's magnetic field and winding currents to generate force within the motor.";
     thiscomponent->updatemtbf((uint64_t)10000 * 3600, civ);
     thiscomponent->time_on      = 10;
@@ -725,11 +725,11 @@ void componentlist::populate_componentlist() {
     thiscomponent->explosivepower      = 0;
     thiscomponent->required_energy     = ((civ->techlevel * 100 / 255) + 1) * 300000;  // 0.3MW x techlevel / 100 http://www.pelletron.com/charging.htm
     thiscomponent->required_fuel       = 2394 / int((civ->redundancy * 4 / 255) + 0.5); // matching cultural redundancy factor
-    thiscomponent->required_energy_min = 4500;  // 6BHP ~= 4.5kW
+    thiscomponent->required_energy_min = 4500;  // 6BHP ~= 4.5KW
     thiscomponent->required_fuel_min   = 0;
     unsigned int nummotors = ((civ->techlevel * 39 / 255) + 1) * 2;   // 2 to 80, in pairs
     for(unsigned int motors = 0; motors < nummotors; ++motors){
-      thiscomponent->parts.push_back("motor_rotary_10kw");
+      thiscomponent->parts.push_back("motor_rotary_10KW");
       thiscomponent->parts.push_back("electromagnetic_coil");
       thiscomponent->parts.push_back("bearing_roller");
       thiscomponent->parts.push_back("bearing_roller");
@@ -777,11 +777,11 @@ void componentlist::populate_componentlist() {
     thiscomponent->explosivepower      = 0;
     thiscomponent->required_energy     = ((civ->techlevel * 100 / 255) + 1) * 300000;  // 0.3MW x techlevel / 100 http://www.pelletron.com/charging.htm
     thiscomponent->required_fuel       = 2394 / int((civ->redundancy * 4 / 255) + 0.5); // matching cultural redundancy factor
-    thiscomponent->required_energy_min = 4500;  // 6BHP ~= 4.5kW
+    thiscomponent->required_energy_min = 4500;  // 6BHP ~= 4.5KW
     thiscomponent->required_fuel_min   = 0;
     unsigned int nummotors = ((civ->techlevel * 39 / 255) + 1) * 2;   // 2 to 80, in pairs
     for(unsigned int motors = 0; motors < nummotors; ++motors){
-      thiscomponent->parts.push_back("motor_rotary_10kw");
+      thiscomponent->parts.push_back("motor_rotary_10KW");
       thiscomponent->parts.push_back("electromagnetic_coil");
       thiscomponent->parts.push_back("bearing_roller");
       thiscomponent->parts.push_back("bearing_roller");
@@ -829,6 +829,12 @@ void componentlist::populate_componentlist() {
     thiscomponent->required_fuel       = 0;
     thiscomponent->required_energy_min = 10000000;
     thiscomponent->required_fuel_min   = 0;
+    thiscomponent->parts.push_back("bearing_roller");
+    thiscomponent->parts.push_back("bearing_roller");
+    thiscomponent->parts.push_back("bearing_roller");
+    thiscomponent->parts.push_back("motor_rotary_10KW");
+    thiscomponent->parts.push_back("motor_rotary_10KW");
+    thiscomponent->parts.push_back("motor_linear_1KW");
     typelist->push_back(thiscomponent);
   }
   {

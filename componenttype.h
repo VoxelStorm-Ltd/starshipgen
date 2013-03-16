@@ -43,8 +43,8 @@ public:
 
   uint64_t mtbf;            // mean time between failures, in seconds
   uint64_t mtbfvariation;   // how much the actual time to failure can vary from MTBF
-  uint64_t time_on;   // how long it takes from activation to full function
-  uint64_t time_off;  // how long it takes from deactivation to cease function
+  unsigned int time_on;   // how long it takes from activation to full function
+  unsigned int time_off;  // how long it takes from deactivation to cease function
   unsigned int failuremodes;  // allowed failure modes
   unsigned char vuln_mechanical;  // how vulnerable it is to mechanical damage (bullets, spanners)
   unsigned char vuln_electric;    // how vulnerable it is to electric damage (power surges)

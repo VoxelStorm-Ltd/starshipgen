@@ -378,12 +378,13 @@ starship::starship(unsigned int seed,
     }
   }
 
-  unsigned int power_propulsion_max = 0;
-  unsigned int power_propulsion_min = 0;
-  unsigned int power_lifesupportmin = 0;
+  unsigned int power_propulsion_max = get_required_energy();
+  unsigned int power_propulsion_min = get_required_energy_min(&component_engines_stl);
+  unsigned int power_lifesupportmin = get_required_energy_min(&component_lifesupport);
 
   std::cout << "This ship consumes from " << power_propulsion_min << "W up to " << power_propulsion_max << "W of power at full propulsion." << std::endl;
   std::cout << "This ship requires at least " << power_lifesupportmin << "W of power to maintain life support." << std::endl;
+  std::cout << "This ship contains " << get_component_count() << " discrete components in " << get_systems_count() << " systems." << std::endl;
   // Decide on power system
   // Determine type of power transmission used
   // Decide number of slower than light engines
@@ -430,4 +431,119 @@ starship::starship(unsigned int seed,
 }
 
 starship::~starship() {
+}
+
+
+unsigned int starship::get_component_count() {
+  /// Wrapper function
+  return get_component_count(&parts);
+}
+unsigned int starship::get_component_count(std::vector<component*> *componentgroup) {
+  /// Return the recursive count of all discrete components that make up this ship
+  unsigned int count = 0;
+  for(std::vector<component*>::iterator i = parts.begin(); i != parts.end(); ++i) {
+    count += (*i)->get_component_count();
+  }
+  if(count == 0) {
+    // if we have no children, then assume we're a discrete component
+    ++count;
+  }
+  return count;
+}
+
+unsigned int starship::get_systems_count() {
+  /// Wrapper function
+  return get_systems_count(&parts);
+}
+unsigned int starship::get_systems_count(std::vector<component*> *componentgroup) {
+  /// Return the recursive count of all systems plus their subsystems that make up this ship
+  unsigned int count = 1;   // everything counts as 1 even if it has children
+  for(std::vector<component*>::iterator i = parts.begin(); i != parts.end(); ++i) {
+    count += (*i)->get_systems_count();
+  }
+  return count;
+}
+
+unsigned int starship::get_time_on() {
+  /// Wrapper function
+  return get_time_on(&parts);
+}
+unsigned int starship::get_time_on(std::vector<component*> *componentgroup) {
+  /// Return the total time this ship takes to get to full operational capacity, including all subparts
+  unsigned int time = 0;
+  for(std::vector<component*>::iterator i = componentgroup->begin(); i != componentgroup->end(); ++i) {
+    unsigned int thistime = (*i)->get_time_on();
+    if(thistime > time) {
+      time = thistime;
+    }
+  }
+  return time;
+}
+
+unsigned int starship::get_time_off() {
+  /// Wrapper function
+  return get_time_off(&parts);
+}
+unsigned int starship::get_time_off(std::vector<component*> *componentgroup) {
+  /// Return the total time this ship takes to shut down, including all subparts
+  unsigned int time = 0;
+  for(std::vector<component*>::iterator i = componentgroup->begin(); i != componentgroup->end(); ++i) {
+    unsigned int thistime = (*i)->get_time_off();
+    if(thistime > time) {
+      time = thistime;
+    }
+  }
+  return time;
+}
+
+unsigned int starship::get_required_energy() {
+  /// Wrapper function
+  return get_required_energy(&parts);
+}
+unsigned int starship::get_required_energy(std::vector<component*> *componentgroup) {
+  /// Return the total energy this ship and all subsystems require for optimal function
+  unsigned int result = 0;
+  for(std::vector<component*>::iterator i = componentgroup->begin(); i != componentgroup->end(); ++i) {
+    result += (*i)->get_required_energy();
+  }
+  return result;
+}
+
+unsigned int starship::get_required_fuel() {
+  /// Wrapper function
+  return get_required_fuel(&parts);
+}
+unsigned int starship::get_required_fuel(std::vector<component*> *componentgroup) {
+  /// Return the total fuel this ship and all subsystems require for optimal function
+  unsigned int result = 0;
+  for(std::vector<component*>::iterator i = componentgroup->begin(); i != componentgroup->end(); ++i) {
+    result += (*i)->get_required_fuel();
+  }
+  return result;
+}
+
+unsigned int starship::get_required_energy_min() {
+  /// Wrapper function
+  return get_required_energy_min(&parts);
+}
+unsigned int starship::get_required_energy_min(std::vector<component*> *componentgroup) {
+  /// Return the total energy this ship and all subsystems require for minimal function
+  unsigned int result = 0;
+  for(std::vector<component*>::iterator i = componentgroup->begin(); i != componentgroup->end(); ++i) {
+    result += (*i)->get_required_energy_min();
+  }
+  return result;
+}
+
+unsigned int starship::get_required_fuel_min() {
+  /// Wrapper function
+  return get_required_fuel_min(&parts);
+}
+unsigned int starship::get_required_fuel_min(std::vector<component*> *componentgroup) {
+  /// Return the total fuel this ship and all subsystems require for minimal function
+  unsigned int result = 0;
+  for(std::vector<component*>::iterator i = componentgroup->begin(); i != componentgroup->end(); ++i) {
+    result += (*i)->get_required_fuel_min();
+  }
+  return result;
 }

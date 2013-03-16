@@ -31,6 +31,14 @@ public:
   ~component();
 
   std::string get_adjective();
+  unsigned int get_component_count();
+  unsigned int get_systems_count();
+  unsigned int get_time_on();
+  unsigned int get_time_off();
+  unsigned int get_required_energy();
+  unsigned int get_required_fuel();
+  unsigned int get_required_energy_min();
+  unsigned int get_required_fuel_min();
 };
 
 #endif // COMPONENT_H_INCLUDED

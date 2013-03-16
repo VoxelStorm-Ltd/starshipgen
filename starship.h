@@ -67,6 +67,23 @@ public:
   starship(unsigned int seed, civilisation *thisciv, componentlist *componenttypest);
   ~starship();
   std::string describe();
+
+  unsigned int get_component_count();
+  unsigned int get_component_count(std::vector<component*> *componentgroup);
+  unsigned int get_systems_count();
+  unsigned int get_systems_count(std::vector<component*> *componentgroup);
+  unsigned int get_time_on();
+  unsigned int get_time_on(std::vector<component*> *componentgroup);
+  unsigned int get_time_off();
+  unsigned int get_time_off(std::vector<component*> *componentgroup);
+  unsigned int get_required_energy();
+  unsigned int get_required_energy(std::vector<component*> *componentgroup);
+  unsigned int get_required_fuel();
+  unsigned int get_required_fuel(std::vector<component*> *componentgroup);
+  unsigned int get_required_energy_min();
+  unsigned int get_required_energy_min(std::vector<component*> *componentgroup);
+  unsigned int get_required_fuel_min();
+  unsigned int get_required_fuel_min(std::vector<component*> *componentgroup);
 };
 
 #endif // STARSHIP_H_INCLUDED

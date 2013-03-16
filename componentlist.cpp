@@ -797,6 +797,42 @@ void componentlist::populate_componentlist() {
   }
   {
     thiscomponent = new componenttype(civ);
+    thiscomponent->id = "weapon_laser_ionising_10MW";
+    thiscomponent->name = "10MW ionising laser";
+    thiscomponent->description = "A laser is a device that emits highly coherent light through a process of optical amplification based on the stimulated emission of photons.";
+    thiscomponent->time_on      = 0;
+    thiscomponent->time_off     = 0;
+    thiscomponent->updatemtbf((uint64_t)5000 * 3600, civ);
+    thiscomponent->failuremodes = componenttype::FAILURE_NONE |
+                                  componenttype::FAILURE_DEACTIVATED |
+                                  componenttype::FAILURE_DISCONNECTED |
+                                  componenttype::FAILURE_NOPOWER |
+                                  componenttype::FAILURE_ONFIRE |
+                                  componenttype::FAILURE_SLOWOFF |
+                                  componenttype::FAILURE_SLOWON |
+                                  componenttype::FAILURE_STUCKOFF |
+                                  componenttype::FAILURE_SLOWON |
+                                  componenttype::FAILURE_TOGGLING |
+                                  componenttype::FAILURE_UNDERPOWER;
+    thiscomponent->vuln_mechanical     = 191;
+    thiscomponent->vuln_electric       = 191;
+    thiscomponent->vuln_laser          = 31;
+    thiscomponent->vuln_heat           = 255;
+    thiscomponent->vuln_cold           = 0;
+    thiscomponent->vuln_shock          = 191;
+    thiscomponent->vuln_pressure       = 191;
+    thiscomponent->vuln_vacuum         = 0;
+    thiscomponent->flammability        = 63;
+    thiscomponent->explosiveness       = 0;
+    thiscomponent->explosivepower      = 0;
+    thiscomponent->required_energy     = 10000000; // 10MW
+    thiscomponent->required_fuel       = 0;
+    thiscomponent->required_energy_min = 10000000;
+    thiscomponent->required_fuel_min   = 0;
+    typelist->push_back(thiscomponent);
+  }
+  {
+    thiscomponent = new componenttype(civ);
     thiscomponent->id = "fueltank_hydrogen";
     thiscomponent->name = "liquid hydrogen tank";
     thiscomponent->description = "Liquid hydrogen (LH2 or LH2) is the liquid state of the element hydrogen. Hydrogen is found naturally in the molecular H2 form. To exist as a liquid, H2 must be cooled below hydrogen's critical point of 33 K. However, for hydrogen to be in a full liquid state without evaporating at atmospheric pressure, it needs to be cooled to 20.28K.";

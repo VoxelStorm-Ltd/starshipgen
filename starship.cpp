@@ -333,7 +333,7 @@ starship::starship(unsigned int seed,
         component_engines_stl.push_back(thisengine);
         unsigned int numlasers = 1 + ((double)civ->redundancy / 255.0 * 3);
         for(unsigned int i = 0; i < numlasers; ++i) {
-          component *thislaser = new component(componenttypes->getcomponent("weapon_laser_ionising"), this);
+          component *thislaser = new component(componenttypes->getcomponent("weapon_laser_ionising_10MW"), this);
           parts.push_back(thislaser);
           component_engines_stl.push_back(thislaser);
           component_weapons.push_back(thislaser);

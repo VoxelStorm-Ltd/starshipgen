@@ -55,6 +55,13 @@ public:
   std::vector<component*> parts;          // the ship's constituent component parts
   std::vector<dependency*> dependencies;  // all shipboard interdependencies
 
+  // pointers to specific ship components:
+  std::vector<component*> component_engines_ftl;
+  std::vector<component*> component_engines_stl;
+  std::vector<component*> component_power;
+  std::vector<component*> component_weapons;
+  std::vector<component*> component_lifesupport;
+
   uint64_t shipclock;             // ship's clock, in seconds since ship's epoch
 
   starship(unsigned int seed, civilisation *thisciv, componentlist *componenttypest);

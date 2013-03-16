@@ -12,7 +12,7 @@ int main() {
 
   // 7009, 0 ~= Qeng Ho
   unsigned int civseed  = 0;
-  unsigned int shipseed = 8;
+  unsigned int shipseed = 1;
 
   civilisation *thisciv = new civilisation(civseed);
   cout << thisciv->describe() << endl;

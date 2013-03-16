@@ -124,33 +124,43 @@ starship::starship(unsigned int seed,
     unsigned int numengines = 1;
     switch(propulsion) {
     case PROPULSION_FUSION:
-      numengines = 1;
-      has_atmospheric = true;
-      std::cout << "This ship has one inertial confinement direct exhaust fusion rocket engine." << std::endl;
-      // radiation shielding
-      // fusion pellet magazines (duterium/helium3 mix)
-      // inertial confinement reactor
-      // lasers
-      // magnetic nozzle
-      // exhaust plasma tapping induction coils
-      parts.push_back(new component(componenttypes->getcomponent("engine_fusionrocket"), this));
-      parts.push_back(new component(componenttypes->getcomponent("engine_rocket_nozzle"), this));
+      {
+        numengines = 1;
+        has_atmospheric = true;
+        std::cout << "This ship has one inertial confinement direct exhaust fusion rocket engine." << std::endl;
+        // radiation shielding
+        // fusion pellet magazines (duterium/helium3 mix)
+        // inertial confinement reactor
+        // lasers
+        // magnetic nozzle
+        // exhaust plasma tapping induction coils
+        component *thisengine = new component(componenttypes->getcomponent("engine_fusionrocket"), this);
+        component *thisnozzle = new component(componenttypes->getcomponent("engine_rocket_nozzle"), this);
+        parts.push_back(thisengine);
+        parts.push_back(thisnozzle);
+        component_engines_stl.push_back(thisengine);
+        component_engines_stl.push_back(thisnozzle);
+      }
       break;
     case PROPULSION_FISSION:
-      numengines = 1;
-      has_atmospheric = true;
-      std::cout << "This ship has one external nuclear pulse rocket engine." << std::endl;
-      parts.push_back(new component(componenttypes->getcomponent("engine_nuclearpulse"), this));
-      // radiation shielding
-      // nuclear pulse unit magazines
-      // ejector gas tank
-      // pulse unit launcher
-      // coolant storage tanks
-      // plasma deflector cone
-      // second stage shock absorbers
-      // intermediate platform
-      // first stage shock absorbers
-      // pusher plate
+      {
+        numengines = 1;
+        has_atmospheric = true;
+        std::cout << "This ship has one external nuclear pulse rocket engine." << std::endl;
+        component *thisengine = new component(componenttypes->getcomponent("engine_nuclearpulse"), this);
+        parts.push_back(thisengine);
+        component_engines_stl.push_back(thisengine);
+        // radiation shielding
+        // nuclear pulse unit magazines
+        // ejector gas tank
+        // pulse unit launcher
+        // coolant storage tanks
+        // plasma deflector cone
+        // second stage shock absorbers
+        // intermediate platform
+        // first stage shock absorbers
+        // pusher plate
+      }
       break;
     case PROPULSION_FUSIONTHERMAL:
       {
@@ -158,16 +168,27 @@ starship::starship(unsigned int seed,
         has_atmospheric = true;
         std::cout << "This ship has " << numengines << " thermal fusion nuclear rocket engines." << std::endl;
         parts.push_back(new component(componenttypes->getcomponent("fueltank_hydrogen"), this));
-        // inertial confinement reactor core
-        // plasma compression guns
-        // external disc shield
-        parts.push_back(new component(componenttypes->getcomponent("engine_thermalfusion"), this));
-        unsigned int numturbopumps = 1 + ((double)civ->redundancy / 255.0 * 4) + 0.5;
-        for(unsigned int i = 0; i < numturbopumps; ++i) {
-          parts.push_back(new component(componenttypes->getcomponent("turbopump"), this));
+        for(unsigned int i = 0; i < numengines; ++i) {
+          // inertial confinement reactor core
+          // plasma compression guns
+          // external disc shield
+          component *thisengine = new component(componenttypes->getcomponent("engine_thermalfusion"), this);
+          parts.push_back(thisengine);
+          component_engines_stl.push_back(thisengine);
+          component_power.push_back(thisengine);
+          unsigned int numturbopumps = 1 + ((double)civ->redundancy / 255.0 * 4) + 0.5;
+          for(unsigned int i = 0; i < numturbopumps; ++i) {
+            component *thispump = new component(componenttypes->getcomponent("turbopump"), this);
+            parts.push_back(thispump);
+            component_engines_stl.push_back(thispump);
+          }
+          component *thisnozzle = new component(componenttypes->getcomponent("engine_rocket_nozzle"), this);
+          parts.push_back(thisnozzle);
+          component_engines_stl.push_back(thisnozzle);
         }
-        parts.push_back(new component(componenttypes->getcomponent("engine_rocket_nozzle"), this));
+        // radiators
       }
+      // radiation shielding
       break;
     case PROPULSION_FISSIONTHERMAL:
       {
@@ -176,108 +197,193 @@ starship::starship(unsigned int seed,
         std::cout << "This ship has " << numengines << " thermal nuclear rocket engines." << std::endl;
         std::cout << "Info: " << componenttypes->getcomponent("engine_thermalnuclear")->description << std::endl;
         for(unsigned int i = 0; i < numengines; ++i) {
-          parts.push_back(new component(componenttypes->getcomponent("engine_thermalnuclear"), this));
+          component *thisengine = new component(componenttypes->getcomponent("engine_thermalnuclear"), this);
+          parts.push_back(thisengine);
+          component_engines_stl.push_back(thisengine);
+          component_power.push_back(thisengine);
         }
-        component *tank = new component(componenttypes->getcomponent("fueltank_hydrogen"), this);
-        parts.push_back(tank);
+        component *thistank = new component(componenttypes->getcomponent("fueltank_hydrogen"), this);
+        parts.push_back(thistank);
+        component_engines_stl.push_back(thistank);
+        // radiators
       }
+      // radiation shielding
       break;
     case PROPULSION_FISSIONFRAGMENT:
-      numengines = randomgen->pick_one(1, 2, 3, 4);
-      has_atmospheric = true;
-      std::cout << "This ship has " << numengines << " fission fragment nuclear rocket engines." << std::endl;
-      parts.push_back(new component(componenttypes->getcomponent("engine_fissionfragment"), this));
-      // fissionable fuel disks
-      // reactor core
-      // fragment exhaust
-      // moderator
-      // containment field generator
-      // induction coils
-      // decelerator
-      parts.push_back(new component(componenttypes->getcomponent("generator_thermonuclear"), this));
+      {
+        numengines = randomgen->pick_one(1, 2, 3, 4);
+        has_atmospheric = true;
+        std::cout << "This ship has " << numengines << " fission fragment nuclear rocket engines." << std::endl;
+        for(unsigned int i = 0; i < numengines; ++i) {
+          component *thisengine = new component(componenttypes->getcomponent("engine_fissionfragment"), this);
+          parts.push_back(thisengine);
+          component_engines_stl.push_back(thisengine);
+          // fissionable fuel disks
+          // reactor core
+          // fragment exhaust
+          // moderator
+          // containment field generator
+          // induction coils
+          // decelerator
+          component *thisgenerator = new component(componenttypes->getcomponent("generator_thermonuclear"), this);
+          parts.push_back(thisgenerator);
+          component_engines_stl.push_back(thisgenerator);
+          component_power.push_back(thisgenerator);
+        }
+      }
       break;
     case PROPULSION_CHEMICAL:
       {
         numengines = randomgen->pick_one(5, 6, 8, 9, 30);
         has_atmospheric = true;
         std::cout << "This ship has " << numengines << " old-fashioned chemical rocket engines." << std::endl;
-        parts.push_back(new component(componenttypes->getcomponent("fueltank_hydrogen"), this));
-        parts.push_back(new component(componenttypes->getcomponent("fueltank_oxygen"), this));
-        unsigned int numturbopumps = 1 + ((double)civ->redundancy / 255.0 * 4) + 0.5;
-        for(unsigned int i = 0; i < numturbopumps; ++i) {
-          parts.push_back(new component(componenttypes->getcomponent("turbopump"), this));
+        component *thistank = new component(componenttypes->getcomponent("fueltank_hydrogen"), this);
+        parts.push_back(thistank);
+        component_engines_stl.push_back(thistank);
+        thistank = new component(componenttypes->getcomponent("fueltank_oxygen"), this);
+        parts.push_back(thistank);
+        component_engines_stl.push_back(thistank);
+        for(unsigned int i = 0; i < numengines; ++i) {
+          unsigned int numturbopumps = 1 + ((double)civ->redundancy / 255.0 * 4) + 0.5;
+          for(unsigned int i = 0; i < numturbopumps; ++i) {
+            component *thispump = new component(componenttypes->getcomponent("turbopump"), this);
+            parts.push_back(thispump);
+            component_engines_stl.push_back(thispump);
+          }
+          component *thismotor = new component(componenttypes->getcomponent("engine_rocket_motor"), this);
+          parts.push_back(thismotor);
+          component_engines_stl.push_back(thismotor);
+          component *thisnozzle = new component(componenttypes->getcomponent("engine_rocket_nozzle"), this);
+          parts.push_back(thisnozzle);
+          component_engines_stl.push_back(thisnozzle);
         }
-        parts.push_back(new component(componenttypes->getcomponent("engine_rocket_motor"), this));
-        parts.push_back(new component(componenttypes->getcomponent("engine_rocket_nozzle"), this));
       }
       break;
     case PROPULSION_ANTIMATTER:
-      numengines = 1;
-      has_atmospheric = true;
-      std::cout << "This ship has one matter/antimatter annihilation rocket engine." << std::endl;
-      parts.push_back(new component(componenttypes->getcomponent("fueltank_hydrogen"), this));
-      parts.push_back(new component(componenttypes->getcomponent("fueltank_antimatter"), this));
-
-      parts.push_back(new component(componenttypes->getcomponent("engine_antimatter_reactor"), this));
-      parts.push_back(new component(componenttypes->getcomponent("engine_magnetic_nozzle"), this));
+      {
+        numengines = 1;
+        has_atmospheric = true;
+        std::cout << "This ship has one matter/antimatter annihilation rocket engine." << std::endl;
+        component *thistank = new component(componenttypes->getcomponent("fueltank_hydrogen"), this);
+        parts.push_back(thistank);
+        component_engines_stl.push_back(thistank);
+        thistank = new component(componenttypes->getcomponent("fueltank_antimatter"), this);
+        parts.push_back(thistank);
+        component_engines_stl.push_back(thistank);
+        component *thisreactor = new component(componenttypes->getcomponent("engine_antimatter_reactor"), this);
+        parts.push_back(thisreactor);
+        component_engines_stl.push_back(thisreactor);
+        component_power.push_back(thisreactor);
+        component *thisnozzle = new component(componenttypes->getcomponent("engine_magnetic_nozzle"), this);
+        parts.push_back(thisnozzle);
+        component_engines_stl.push_back(thisnozzle);
+        // radiation shielding
+        // radiators
+      }
       break;
     case PROPULSION_ANTIMATTERFUSION:
-      numengines = 1;
-      has_atmospheric = true;
-      std::cout << "This ship is equipped with an antimatter catalyzed nuclear pulse engine." << std::endl;
-      parts.push_back(new component(componenttypes->getcomponent("fueltank_hydrogen"), this));
-      parts.push_back(new component(componenttypes->getcomponent("fueltank_antimatter"), this));
-      parts.push_back(new component(componenttypes->getcomponent("engine_antimatterfusion"), this));
-      // radiation shielding
-      // nuclear pulse microfusion unit magazines
-      // ejector gas tank
-      // pulse unit launcher
-      // coolant storage tanks
-      // plasma deflector cone
-      // shock absorbers
-      // pusher plate
+      {
+        numengines = 1;
+        has_atmospheric = true;
+        std::cout << "This ship is equipped with an antimatter catalyzed nuclear pulse engine." << std::endl;
+        component *thistank = new component(componenttypes->getcomponent("fueltank_hydrogen"), this);
+        parts.push_back(thistank);
+        component_engines_stl.push_back(thistank);
+        thistank = new component(componenttypes->getcomponent("fueltank_antimatter"), this);
+        parts.push_back(thistank);
+        component_engines_stl.push_back(thistank);
+        component *thisengine = new component(componenttypes->getcomponent("engine_antimatterfusion"), this);
+        parts.push_back(thisengine);
+        component_engines_stl.push_back(thisengine);
+        component_power.push_back(thisengine);
+        // radiators
+        // radiation shielding
+        // nuclear pulse microfusion unit magazines
+        // ejector gas tank
+        // pulse unit launcher
+        // coolant storage tanks
+        // plasma deflector cone
+        // shock absorbers
+        // pusher plate
+      }
       break;
     case PROPULSION_ION:
-      numengines = randomgen->pick_one(1, 2, 3, 4);
-      has_atmospheric = false;
-      std::cout << "This ship is equipped with " << numengines << " electric ion thrusters." << std::endl;
-      parts.push_back(new component(componenttypes->getcomponent("fueltank_xenon"), this));
-      parts.push_back(new component(componenttypes->getcomponent("engine_ion"), this));
-      // electric engine nozzle
+      {
+        numengines = randomgen->pick_one(1, 2, 3, 4);
+        has_atmospheric = false;
+        std::cout << "This ship is equipped with " << numengines << " electric ion thrusters." << std::endl;
+        component *thistank = new component(componenttypes->getcomponent("fueltank_xenon"), this);
+        parts.push_back(thistank);
+        component_engines_stl.push_back(thistank);
+        for(unsigned int i = 0; i < numengines; ++i) {
+          component *thisengine = new component(componenttypes->getcomponent("engine_ion"), this);
+          parts.push_back(thisengine);
+          component_engines_stl.push_back(thisengine);
+          // electric engine nozzle
+        }
+      }
       break;
     case PROPULSION_RAMSCOOP:
-      numengines = 1;
-      has_atmospheric = false;
-      std::cout << "This ship is equipped with a Bussard ramscoop engine." << std::endl;
-      parts.push_back(new component(componenttypes->getcomponent("weapon_laser_ionising"), this));
-      parts.push_back(new component(componenttypes->getcomponent("engine_ramscoop"), this));
-      // electrostatic field generators
-      // collector
-      // fusion chamber
-      // fusion nozzle
+      {
+        numengines = 1;
+        has_atmospheric = false;
+        std::cout << "This ship is equipped with a Bussard ramscoop engine." << std::endl;
+        component *thisengine = new component(componenttypes->getcomponent("engine_ramscoop"), this);
+        parts.push_back(thisengine);
+        component_engines_stl.push_back(thisengine);
+        unsigned int numlasers = 1 + ((double)civ->redundancy / 255.0 * 3);
+        for(unsigned int i = 0; i < numlasers; ++i) {
+          component *thislaser = new component(componenttypes->getcomponent("weapon_laser_ionising"), this);
+          parts.push_back(thislaser);
+          component_engines_stl.push_back(thislaser);
+          component_weapons.push_back(thislaser);
+        }
+        // collector
+        // fusion chamber
+        // fusion nozzle
+      }
       break;
     case PROPULSION_SAIL:
-      numengines = 1;
-      has_atmospheric = false;
-      std::cout << "This ship is equipped with a solar sail." << std::endl;
-      parts.push_back(new component(componenttypes->getcomponent("engine_sail"), this));
+      {
+        numengines = 1;
+        has_atmospheric = false;
+        std::cout << "This ship is equipped with a solar sail." << std::endl;
+        component *thisengine = new component(componenttypes->getcomponent("engine_sail"), this);
+        parts.push_back(thisengine);
+        component_engines_stl.push_back(thisengine);
+      }
       break;
     case PROPULSION_VASIMR:
-      numengines = randomgen->pick_one(2, 4);
-      has_atmospheric = false;
-      std::cout << "This ship has " << numengines << " Variable Specific Impulse Magnetoplasma Rocket (VASIMR) engines." << std::endl;
-      parts.push_back(new component(componenttypes->getcomponent("fueltank_argon"), this));
-      parts.push_back(new component(componenttypes->getcomponent("engine_vasimr"), this));
-      // RF generators
-      // injector
-      // helicon coupler
-      // ICH coupler
-      // electric engine nozzle
+      {
+        numengines = randomgen->pick_one(2, 4);
+        has_atmospheric = false;
+        std::cout << "This ship has " << numengines << " Variable Specific Impulse Magnetoplasma Rocket (VASIMR) engines." << std::endl;
+        component *thistank = new component(componenttypes->getcomponent("fueltank_argon"), this);
+        parts.push_back(thistank);
+        component_engines_stl.push_back(thistank);
+        for(unsigned int i = 0; i < numengines; ++i) {
+          component *thisengine = new component(componenttypes->getcomponent("engine_vasimr"), this);
+          parts.push_back(thisengine);
+          component_engines_stl.push_back(thisengine);
+          // RF generators
+          // injector
+          // helicon coupler
+          // ICH coupler
+          // electric engine nozzle
+        }
+      }
       break;
     default:
       std::cout << "ERROR: STL propulsion determination error, unhandled enum " << propulsion << std::endl;;
     }
   }
+
+  unsigned int power_propulsion_max = 0;
+  unsigned int power_propulsion_min = 0;
+  unsigned int power_lifesupportmin = 0;
+
+  std::cout << "This ship consumes from " << power_propulsion_min << "W up to " << power_propulsion_max << "W of power at full propulsion." << std::endl;
+  std::cout << "This ship requires at least " << power_lifesupportmin << "W of power to maintain life support." << std::endl;
   // Decide on power system
   // Determine type of power transmission used
   // Decide number of slower than light engines

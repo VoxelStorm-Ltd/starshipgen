@@ -1,6 +1,6 @@
 #include "civilisation.h"
-#include <cstdlib>
-#include <string>
+//#include <cstdlib>
+//#include <string>
 #include <sstream>
 
 std::string civilisation::describe() {

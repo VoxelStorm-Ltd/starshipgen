@@ -1,6 +1,6 @@
 #include "starship.h"
-#include <cstdlib>
-#include <string>
+//#include <cstdlib>
+//#include <string>
 #include <sstream>
 
 std::string starship::describe() {

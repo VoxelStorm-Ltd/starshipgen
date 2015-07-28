@@ -1,5 +1,5 @@
 #include "civilisation.h"
-#include <cstdlib>
+//#include <cstdlib>
 
 civilisation::civilisation(unsigned int seed) {
   randomgen = new randomgenerator(seed);

@@ -1,6 +1,6 @@
 #include "component.h"
 #include "componentlist.h"
-#include "componenttype.h"
+//#include "componenttype.h"
 #include "starship.h"
 #include "randomgen.h"
 

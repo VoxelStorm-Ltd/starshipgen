@@ -189,7 +189,7 @@ void componentlist::populate_componentlist() {
     thiscomponent->explosiveness       = 0;
     thiscomponent->explosivepower      = 0;
     thiscomponent->required_energy     = 103500000;                             // 103MW for galaxy-class (1000kg ~ 2.3KW NSTAR)
-    thiscomponent->required_fuel       = 2394 / int((civ->redundancy * 4 / 255) + 0.5); // matching cultural redundancy factor
+    thiscomponent->required_fuel       = 2394 / std::max(static_cast<unsigned int>((civ->redundancy * 4 / 255) + 0.5), 1u); // matching cultural redundancy factor
     thiscomponent->required_energy_min = 4500;                                  // 6BHP ~= 4.5KW
     thiscomponent->required_fuel_min   = 0;
     thiscomponent->parts.push_back("fan_impeller");
@@ -725,7 +725,7 @@ void componentlist::populate_componentlist() {
     thiscomponent->explosiveness       = 0;
     thiscomponent->explosivepower      = 0;
     thiscomponent->required_energy     = ((civ->techlevel * 100 / 255) + 1) * 300000; // 0.3MW x techlevel / 100 http://www.pelletron.com/charging.htm
-    thiscomponent->required_fuel       = 2394 / int((civ->redundancy * 4 / 255) + 0.5); // matching cultural redundancy factor
+    thiscomponent->required_fuel       = 2394 / std::max(static_cast<unsigned int>((civ->redundancy * 4 / 255) + 0.5), 1u); // matching cultural redundancy factor
     thiscomponent->required_energy_min = 4500;                                  // 6BHP ~= 4.5KW
     thiscomponent->required_fuel_min   = 0;
     unsigned int nummotors = ((civ->techlevel * 39 / 255) + 1) * 2;             // 2 to 80, in pairs
@@ -777,7 +777,7 @@ void componentlist::populate_componentlist() {
     thiscomponent->explosiveness       = 0;
     thiscomponent->explosivepower      = 0;
     thiscomponent->required_energy     = ((civ->techlevel * 100 / 255) + 1) * 300000; // 0.3MW x techlevel / 100 http://www.pelletron.com/charging.htm
-    thiscomponent->required_fuel       = 2394 / int((civ->redundancy * 4 / 255) + 0.5); // matching cultural redundancy factor
+    thiscomponent->required_fuel       = 2394 / std::max(static_cast<unsigned int>((civ->redundancy * 4 / 255) + 0.5), 1u); // matching cultural redundancy factor
     thiscomponent->required_energy_min = 4500;                                  // 6BHP ~= 4.5KW
     thiscomponent->required_fuel_min   = 0;
     unsigned int nummotors = ((civ->techlevel * 39 / 255) + 1) * 2;             // 2 to 80, in pairs

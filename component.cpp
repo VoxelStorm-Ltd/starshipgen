@@ -1,20 +1,19 @@
+#include <iostream>
 #include "component.h"
 #include "componentlist.h"
-//#include "componenttype.h"
 #include "starship.h"
-#include "randomgen.h"
 
 component::component(componenttype *thiscomponenttype, starship *thisship) {
   thistype = thiscomponenttype;
 
   timeinstalled    = thisship->shipclock;
-  timelastswitched = 0;   // never activated
+  timelastswitched = 0;                                                         // never activated
   powercycles      = 0;
   timeoffailure    = timeinstalled + (thistype->mtbf + rand() % thistype->mtbfvariation);
   failurestate     = componenttype::STATE_OK;
   failuremode      = componenttype::FAILURE_NONE;
 
-  temperature = 294.15;     // 21 deg C in K
+  temperature = 294.15;                                                         // 21 deg C in K
 
   // cycle through the type's parts and populate them
   std::vector<std::string>::iterator i;
@@ -71,7 +70,7 @@ unsigned int component::get_component_count() {
 
 unsigned int component::get_systems_count() {
   /// Return the recursive count of all systems plus their subsystems that make up this part
-  unsigned int count = 1;   // everything counts as 1 even if it has children
+  unsigned int count = 1;                                                       // everything counts as 1 even if it has children
   for(std::vector<component*>::iterator i = parts.begin(); i != parts.end(); ++i) {
     count += (*i)->get_systems_count();
   }

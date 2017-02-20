@@ -1,3 +1,4 @@
+#include <iostream>
 #include "componentlist.h"
 #include "componenttype.h"
 #include "civilisation.h"
@@ -51,7 +52,7 @@ void componentlist::populate_componentlist() {
     thiscomponent->explosiveness       = 0;
     thiscomponent->explosivepower      = 0;
     thiscomponent->required_energy     = 0;
-    thiscomponent->required_fuel       = 2394;  // milligrams of fuel
+    thiscomponent->required_fuel       = 2394;                                  // milligrams of fuel
     thiscomponent->required_energy_min = 0;
     thiscomponent->required_fuel_min   = 500;
     unsigned int numturbopumps = (civ->redundancy * 4 / 255) + 0.5;
@@ -102,7 +103,7 @@ void componentlist::populate_componentlist() {
     thiscomponent->explosiveness       = 0;
     thiscomponent->explosivepower      = 0;
     thiscomponent->required_energy     = 0;
-    thiscomponent->required_fuel       = 2394;  // milligrams of fuel
+    thiscomponent->required_fuel       = 2394;                                  // milligrams of fuel
     thiscomponent->required_energy_min = 0;
     thiscomponent->required_fuel_min   = 500;
     typelist->push_back(thiscomponent);
@@ -187,9 +188,9 @@ void componentlist::populate_componentlist() {
     thiscomponent->flammability        = 10;
     thiscomponent->explosiveness       = 0;
     thiscomponent->explosivepower      = 0;
-    thiscomponent->required_energy     = 103500000; // 103MW for galaxy-class (1000kg ~ 2.3KW NSTAR)
+    thiscomponent->required_energy     = 103500000;                             // 103MW for galaxy-class (1000kg ~ 2.3KW NSTAR)
     thiscomponent->required_fuel       = 2394 / int((civ->redundancy * 4 / 255) + 0.5); // matching cultural redundancy factor
-    thiscomponent->required_energy_min = 4500;  // 6BHP ~= 4.5KW
+    thiscomponent->required_energy_min = 4500;                                  // 6BHP ~= 4.5KW
     thiscomponent->required_fuel_min   = 0;
     thiscomponent->parts.push_back("fan_impeller");
     thiscomponent->parts.push_back("fan_turbine");
@@ -260,8 +261,8 @@ void componentlist::populate_componentlist() {
     thiscomponent->name = "reactor core";
     thiscomponent->description = "A nuclear reactor is a device to initiate and control a sustained nuclear chain reaction. When a large fissile atomic nucleus such as uranium-235 or plutonium-239 absorbs a neutron, it may undergo nuclear fission. The heavy nucleus splits into two or more lighter nuclei (the fission products), releasing kinetic energy, gamma radiation and free neutrons. A portion of these neutrons may later be absorbed by other fissile atoms and trigger further fission events, which release more neutrons, and so on. This is known as a nuclear chain reaction.";
     thiscomponent->updatemtbf((uint64_t)500000 * 3600, civ);
-    thiscomponent->time_on      = 3600 * 12;  // 12 hours
-    thiscomponent->time_off     = 30;   // rapid scramble shutdown
+    thiscomponent->time_on      = 3600 * 12;                                    // 12 hours
+    thiscomponent->time_off     = 30;                                           // rapid scramble shutdown
     thiscomponent->failuremodes = componenttype::FAILURE_NONE |
                                   componenttype::FAILURE_DEACTIVATED |
                                   componenttype::FAILURE_DISCONNECTED |
@@ -284,7 +285,7 @@ void componentlist::populate_componentlist() {
     thiscomponent->vuln_vacuum         = 0;
     thiscomponent->flammability        = 10;
     thiscomponent->explosiveness       = 10;
-    thiscomponent->explosivepower      = 1000000; // 1 ton of TNT
+    thiscomponent->explosivepower      = 1000000;                               // 1 ton of TNT
     thiscomponent->required_energy     = 0;
     thiscomponent->required_fuel       = 0;
     thiscomponent->required_energy_min = 0;
@@ -431,7 +432,7 @@ void componentlist::populate_componentlist() {
     thiscomponent->flammability        = 63;
     thiscomponent->explosiveness       = 191;
     thiscomponent->explosivepower      = 0;
-    thiscomponent->required_energy     = 1000000; // 1MW
+    thiscomponent->required_energy     = 1000000;                               // 1MW
     thiscomponent->required_fuel       = 0;
     thiscomponent->required_energy_min = 1000000;
     thiscomponent->required_fuel_min   = 0;
@@ -487,7 +488,7 @@ void componentlist::populate_componentlist() {
     thiscomponent->flammability        = 63;
     thiscomponent->explosiveness       = 0;
     thiscomponent->explosivepower      = 0;
-    thiscomponent->required_energy     = 1000;  // 1KW
+    thiscomponent->required_energy     = 1000;                                  // 1KW
     thiscomponent->required_fuel       = 0;
     thiscomponent->required_energy_min = 250;
     thiscomponent->required_fuel_min   = 0;
@@ -522,7 +523,7 @@ void componentlist::populate_componentlist() {
     thiscomponent->flammability        = 96;
     thiscomponent->explosiveness       = 0;
     thiscomponent->explosivepower      = 0;
-    thiscomponent->required_energy     = 1000;  // 1KW
+    thiscomponent->required_energy     = 1000;                                  // 1KW
     thiscomponent->required_fuel       = 0;
     thiscomponent->required_energy_min = 250;
     thiscomponent->required_fuel_min   = 0;
@@ -561,7 +562,7 @@ void componentlist::populate_componentlist() {
     thiscomponent->flammability        = 96;
     thiscomponent->explosiveness       = 0;
     thiscomponent->explosivepower      = 0;
-    thiscomponent->required_energy     = 10000;  // 10KW
+    thiscomponent->required_energy     = 10000;                                 // 10KW
     thiscomponent->required_fuel       = 0;
     thiscomponent->required_energy_min = 2500;
     thiscomponent->required_fuel_min   = 0;
@@ -723,11 +724,11 @@ void componentlist::populate_componentlist() {
     thiscomponent->flammability        = 127;
     thiscomponent->explosiveness       = 0;
     thiscomponent->explosivepower      = 0;
-    thiscomponent->required_energy     = ((civ->techlevel * 100 / 255) + 1) * 300000;  // 0.3MW x techlevel / 100 http://www.pelletron.com/charging.htm
+    thiscomponent->required_energy     = ((civ->techlevel * 100 / 255) + 1) * 300000; // 0.3MW x techlevel / 100 http://www.pelletron.com/charging.htm
     thiscomponent->required_fuel       = 2394 / int((civ->redundancy * 4 / 255) + 0.5); // matching cultural redundancy factor
-    thiscomponent->required_energy_min = 4500;  // 6BHP ~= 4.5KW
+    thiscomponent->required_energy_min = 4500;                                  // 6BHP ~= 4.5KW
     thiscomponent->required_fuel_min   = 0;
-    unsigned int nummotors = ((civ->techlevel * 39 / 255) + 1) * 2;   // 2 to 80, in pairs
+    unsigned int nummotors = ((civ->techlevel * 39 / 255) + 1) * 2;             // 2 to 80, in pairs
     for(unsigned int motors = 0; motors < nummotors; ++motors){
       thiscomponent->parts.push_back("motor_rotary_10KW");
       thiscomponent->parts.push_back("electromagnetic_coil");
@@ -775,11 +776,11 @@ void componentlist::populate_componentlist() {
     thiscomponent->flammability        = 127;
     thiscomponent->explosiveness       = 0;
     thiscomponent->explosivepower      = 0;
-    thiscomponent->required_energy     = ((civ->techlevel * 100 / 255) + 1) * 300000;  // 0.3MW x techlevel / 100 http://www.pelletron.com/charging.htm
+    thiscomponent->required_energy     = ((civ->techlevel * 100 / 255) + 1) * 300000; // 0.3MW x techlevel / 100 http://www.pelletron.com/charging.htm
     thiscomponent->required_fuel       = 2394 / int((civ->redundancy * 4 / 255) + 0.5); // matching cultural redundancy factor
-    thiscomponent->required_energy_min = 4500;  // 6BHP ~= 4.5KW
+    thiscomponent->required_energy_min = 4500;                                  // 6BHP ~= 4.5KW
     thiscomponent->required_fuel_min   = 0;
-    unsigned int nummotors = ((civ->techlevel * 39 / 255) + 1) * 2;   // 2 to 80, in pairs
+    unsigned int nummotors = ((civ->techlevel * 39 / 255) + 1) * 2;             // 2 to 80, in pairs
     for(unsigned int motors = 0; motors < nummotors; ++motors){
       thiscomponent->parts.push_back("motor_rotary_10KW");
       thiscomponent->parts.push_back("electromagnetic_coil");
@@ -825,7 +826,7 @@ void componentlist::populate_componentlist() {
     thiscomponent->flammability        = 63;
     thiscomponent->explosiveness       = 0;
     thiscomponent->explosivepower      = 0;
-    thiscomponent->required_energy     = 10000000; // 10MW
+    thiscomponent->required_energy     = 10000000;                              // 10MW
     thiscomponent->required_fuel       = 0;
     thiscomponent->required_energy_min = 10000000;
     thiscomponent->required_fuel_min   = 0;
@@ -856,7 +857,7 @@ void componentlist::populate_componentlist() {
     thiscomponent->vuln_vacuum         = 0;
     thiscomponent->flammability        = 255;
     thiscomponent->explosiveness       = 255;
-    thiscomponent->explosivepower      = 10000; // 10KG TNT
+    thiscomponent->explosivepower      = 10000;                                 // 10KG TNT
     typelist->push_back(thiscomponent);
   }
   {
@@ -878,7 +879,7 @@ void componentlist::populate_componentlist() {
     thiscomponent->vuln_vacuum         = 0;
     thiscomponent->flammability        = 255;
     thiscomponent->explosiveness       = 255;
-    thiscomponent->explosivepower      = 10000; // 10KG TNT
+    thiscomponent->explosivepower      = 10000;                                 // 10KG TNT
     typelist->push_back(thiscomponent);
   }
   {
@@ -899,7 +900,7 @@ void componentlist::populate_componentlist() {
     thiscomponent->vuln_vacuum         = 0;
     thiscomponent->flammability        = 0;
     thiscomponent->explosiveness       = 63;
-    thiscomponent->explosivepower      = 1000; // 1KG TNT
+    thiscomponent->explosivepower      = 1000;                                  // 1KG TNT
     typelist->push_back(thiscomponent);
   }
   {
@@ -920,7 +921,7 @@ void componentlist::populate_componentlist() {
     thiscomponent->vuln_vacuum         = 0;
     thiscomponent->flammability        = 0;
     thiscomponent->explosiveness       = 63;
-    thiscomponent->explosivepower      = 1000; // 1KG TNT
+    thiscomponent->explosivepower      = 1000;                                  // 1KG TNT
     typelist->push_back(thiscomponent);
   }
 }

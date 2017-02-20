@@ -1,26 +1,22 @@
-//#include <iostream>
-
+#include <iostream>
 #include "civilisation.h"
 #include "starship.h"
-
 #include "componentlist.h"
 
-using namespace std;
-
 int main() {
-  cout << "Generating civilisation..." << endl;
+  std::cout << "Generating civilisation..." << std::endl;
 
   // 7009, 0 ~= Qeng Ho
   unsigned int civseed  = 0;
   unsigned int shipseed = 1;
 
   civilisation *thisciv = new civilisation(civseed);
-  cout << thisciv->describe() << endl;
+  std::cout << thisciv->describe() << std::endl;
 
   componentlist *thiscomponentlist = new componentlist(thisciv);
 
   starship *thisship = new starship(shipseed, thisciv, thiscomponentlist);
-  cout << thisship->describe() << endl;
+  std::cout << thisship->describe() << std::endl;
 
-  return 0;
+  return EXIT_SUCCESS;
 }

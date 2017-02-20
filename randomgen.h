@@ -7,7 +7,7 @@
 class randomgenerator {
 public:
   // random generator features
-  boost::mt19937 gen;   // merseinne twister
+  boost::mt19937 gen;                                                           // merseinne twister
 
   randomgenerator(unsigned int seed);
   ~randomgenerator();

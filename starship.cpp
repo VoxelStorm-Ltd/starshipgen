@@ -1,3 +1,4 @@
+#include <iostream>
 #include "starship.h"
 #include "civilisation.h"
 #include "componentlist.h"
@@ -457,7 +458,7 @@ unsigned int starship::get_systems_count() {
 }
 unsigned int starship::get_systems_count(std::vector<component*> *componentgroup) {
   /// Return the recursive count of all systems plus their subsystems that make up this ship
-  unsigned int count = 1;   // everything counts as 1 even if it has children
+  unsigned int count = 1;                                                       // everything counts as 1 even if it has children
   for(std::vector<component*>::iterator i = parts.begin(); i != parts.end(); ++i) {
     count += (*i)->get_systems_count();
   }

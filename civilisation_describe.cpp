@@ -4,7 +4,7 @@
 #include <sstream>
 
 std::string civilisation::describe() {
-  char notethres = 64;   // attribute notability threshold
+  char notethres = 64;                                                          // attribute notability threshold
 
   std::stringstream desc;
   desc << "This is a ";

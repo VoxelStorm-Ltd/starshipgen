@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <random>
 
 #include <boost/program_options.hpp>
 
@@ -9,16 +10,14 @@
 
 int main(int argc, char *argv[]) {
   unsigned int civseed  = 0;
-  unsigned int shipseed = 1;
+  unsigned int shipseed = 0;
 
   // 7009, 0 ~= Qeng Ho
   boost::program_options::options_description options("Options");
   options.add_options()
     ("help,h", "show this help message")
-    ("civ-seed,c", boost::program_options::value<unsigned int>(&civseed)->default_value(civseed),
-      "civilisation seed")
-    ("ship-seed,s", boost::program_options::value<unsigned int>(&shipseed)->default_value(shipseed),
-      "starship seed");
+    ("civ-seed,c", boost::program_options::value<unsigned int>(&civseed), "civilisation seed")
+    ("ship-seed,s", boost::program_options::value<unsigned int>(&shipseed), "starship seed");
 
   boost::program_options::variables_map arguments;
   try {
@@ -34,6 +33,16 @@ int main(int argc, char *argv[]) {
   } catch(const boost::program_options::error &error) {
     std::cerr << "Error: " << error.what() << "\n\n" << options;
     return EXIT_FAILURE;
+  }
+
+  if(!arguments.count("civ-seed") || !arguments.count("ship-seed")) {
+    std::random_device random;
+    if(!arguments.count("civ-seed")) {
+      civseed = random();
+    }
+    if(!arguments.count("ship-seed")) {
+      shipseed = random();
+    }
   }
 
   std::cout << "Generating civilisation with civ seed " << civseed

@@ -37,6 +37,6 @@ With a single-config generator, run:
 Multi-config generators place the executable in a configuration subdirectory,
 such as `build/Release/starshipgen`.
 
-Both seed options are optional; the civilisation seed defaults to `0` and the
-starship seed defaults to `1`. Run `starshipgen --help` to list the available
+Both seed options are optional. Any omitted seed is selected randomly and
+printed when the program starts. Run `starshipgen --help` to list the available
 options.

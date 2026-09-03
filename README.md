@@ -8,7 +8,7 @@
 
 - A C++11-compatible compiler
 - CMake 3.16 or newer
-- Boost headers (including Boost.Random)
+- Boost.Random headers and the Boost.Program_options library
 
 ## Build
 
@@ -31,8 +31,12 @@ cmake --build build --config Release --parallel
 With a single-config generator, run:
 
 ```sh
-./build/starshipgen
+./build/starshipgen --civ-seed 7009 --ship-seed 0
 ```
 
 Multi-config generators place the executable in a configuration subdirectory,
 such as `build/Release/starshipgen`.
+
+Both seed options are optional; the civilisation seed defaults to `0` and the
+starship seed defaults to `1`. Run `starshipgen --help` to list the available
+options.

@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libboost-dev
+          sudo apt-get install -y libboost-program-options-dev
 
       - name: Configure
         run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
@@ -28,4 +28,4 @@ jobs:
         run: cmake --build build --parallel
 
       - name: Run
-        run: ./build/starshipgen
+        run: ./build/starshipgen --civ-seed 0 --ship-seed 1

@@ -6,7 +6,7 @@ if(POLICY CMP0167)
     cmake_policy(SET CMP0167 NEW)
 endif()
 
-find_package(Boost REQUIRED)
+find_package(Boost REQUIRED COMPONENTS program_options)
 
 add_executable(starshipgen
     civilisation.cpp
@@ -22,7 +22,7 @@ add_executable(starshipgen
 )
 
 target_compile_features(starshipgen PRIVATE cxx_std_11)
-target_link_libraries(starshipgen PRIVATE Boost::headers)
+target_link_libraries(starshipgen PRIVATE Boost::program_options)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     target_compile_options(starshipgen PRIVATE -Wall)

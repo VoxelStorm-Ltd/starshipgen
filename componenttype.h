@@ -1,6 +1,7 @@
 #ifndef COMPONENTTYPE_H_INCLUDED
 #define COMPONENTTYPE_H_INCLUDED
 
+#include <cstdint>
 #include <vector>
 #include <string>
 class civilisation;

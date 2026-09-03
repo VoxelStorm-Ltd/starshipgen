@@ -1,6 +1,7 @@
 #ifndef COMPONENT_H_INCLUDED
 #define COMPONENT_H_INCLUDED
 
+#include <cstdint>
 #include <vector>
 #include <string>
 //class componenttype;

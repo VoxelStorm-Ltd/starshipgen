@@ -1,6 +1,7 @@
 #ifndef STARSHIP_H_INCLUDED
 #define STARSHIP_H_INCLUDED
 
+#include <cstdint>
 #include <vector>
 #include <string>
 class randomgenerator;

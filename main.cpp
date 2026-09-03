@@ -36,7 +36,8 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
-  std::cout << "Generating civilisation..." << std::endl;
+  std::cout << "Generating civilisation with civ seed " << civseed
+            << " and ship seed " << shipseed << "..." << std::endl;
 
   civilisation *thisciv = new civilisation(civseed);
   std::cout << thisciv->describe() << std::endl;

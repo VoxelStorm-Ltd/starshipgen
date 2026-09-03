@@ -934,6 +934,11 @@ componenttype *componentlist::getcomponent(std::string thisid) {
       return *i;
     }
   }
-  std::cout << "WARNING: getcomponent request for " << thisid << " returned NULL" << std::endl;
-  return NULL;
+  std::cout << "WARNING: getcomponent request for " << thisid
+            << " returned a generic component" << std::endl;
+  componenttype *thiscomponent = new componenttype(civ);
+  thiscomponent->id = thisid;
+  thiscomponent->name = thisid;
+  typelist->push_back(thiscomponent);
+  return thiscomponent;
 }

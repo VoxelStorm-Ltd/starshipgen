@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iostream>
 #include "component.h"
 #include "componentlist.h"
@@ -9,7 +10,10 @@ component::component(componenttype *thiscomponenttype, starship *thisship) {
   timeinstalled    = thisship->shipclock;
   timelastswitched = 0;                                                         // never activated
   powercycles      = 0;
-  timeoffailure    = timeinstalled + (thistype->mtbf + rand() % thistype->mtbfvariation);
+  timeoffailure    = timeinstalled + thistype->mtbf;
+  if(thistype->mtbfvariation != 0) {
+    timeoffailure += std::rand() % thistype->mtbfvariation;
+  }
   failurestate     = componenttype::STATE_OK;
   failuremode      = componenttype::FAILURE_NONE;
 

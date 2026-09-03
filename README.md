@@ -1,5 +1,7 @@
 # starshipgen
 
+[![Build](https://github.com/VoxelStorm-Ltd/starshipgen/actions/workflows/cmake-single-platform.yml/badge.svg)](https://github.com/VoxelStorm-Ltd/starshipgen/actions/workflows/cmake-single-platform.yml)
+
 `starshipgen` is a C++ command-line starship and civilisation generator.
 
 ## Requirements

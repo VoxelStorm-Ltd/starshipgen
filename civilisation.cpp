@@ -1,13 +1,14 @@
 #include "civilisation.h"
 //#include <cstdlib>
 
-civilisation::civilisation(unsigned int seed) {
-  randomgen = new randomgenerator(seed);
+civilisation::civilisation(unsigned int const seed) {
+  /// Generate a civilisation deterministically from the supplied seed
+  randomgen = new randomgenerator{seed};
 
   // technological attributes
   techlevel = randomgen->random_uchar();
   wealth    = randomgen->random_uchar();
-  if(wealth < techlevel / (unsigned char)2) {
+  if(wealth < techlevel / static_cast<unsigned char>(2)) {
     // ensure that wealth is not too far behind technology, or it looks silly
     wealth = techlevel / 2;
   }
@@ -62,8 +63,6 @@ civilisation::civilisation(unsigned int seed) {
   tobacco_use     = randomgen->random_char_normal();
   stimulant_use   = randomgen->random_char_normal();
   drug_use        = randomgen->random_char_normal();
-
-
   // social attributes
   deathpenalty      = randomgen->random_bool_weighted(0.25);
   if(vangefulness > 100) {
@@ -108,5 +107,3 @@ civilisation::civilisation(unsigned int seed) {
 
 civilisation::~civilisation() {
 }
-
-

@@ -1,5 +1,4 @@
-#ifndef CIVILISATION_H_INCLUDED
-#define CIVILISATION_H_INCLUDED
+#pragma once
 
 #include <string>
 #include "randomgen.h"
@@ -54,7 +53,7 @@ public:
   char ruthlessness;                                                            // how likely to ignore the suffering of others
   char vangefulness;                                                            // how likely to seek revenge when wronged
   char cowardice;                                                               // how likely to prioritise self-preservation
-  char laziness ;                                                               // how likely they are to de-prioritise a physical task
+  char laziness;                                                                // how likely they are to de-prioritise a physical task
   char alcohol_use;                                                             // predilection to drinking alcohol (incapacitating for work)
   char tobacco_use;                                                             // predilection to smoking
   char stimulant_use;                                                           // predilection to using stimulants for work (caffeine, amphetamines)
@@ -64,9 +63,7 @@ public:
 
   randomgenerator *randomgen;
 
-  civilisation(unsigned int seed);
+  explicit civilisation(unsigned int seed);
   ~civilisation();
   std::string describe();
 };
-
-#endif // CIVILISATION_H_INCLUDED

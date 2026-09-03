@@ -1,14 +1,10 @@
-#ifndef COMPONENT_H_INCLUDED
-#define COMPONENT_H_INCLUDED
+#pragma once
 
 #include <cstdint>
-#include <vector>
 #include <string>
-//class componenttype;
-//enum class state;
-//enum class failuremode;
-// The above requires C++0x (and a base type)
+#include <vector>
 #include "componenttype.h"
+
 class starship;
 
 class component {
@@ -41,5 +37,3 @@ public:
   unsigned int get_required_energy_min();
   unsigned int get_required_fuel_min();
 };
-
-#endif // COMPONENT_H_INCLUDED

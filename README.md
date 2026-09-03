@@ -6,8 +6,8 @@
 
 ## Requirements
 
-- A C++11-compatible compiler
-- CMake 3.16 or newer
+- A C++23-compatible compiler
+- CMake 3.20 or newer
 - Boost.Random headers and the Boost.Program_options library
 
 ## Build

@@ -1,5 +1,4 @@
-#ifndef RANDOMGEN_H_INCLUDED
-#define RANDOMGEN_H_INCLUDED
+#pragma once
 
 #include <string>
 #include <boost/random/mersenne_twister.hpp>
@@ -9,7 +8,7 @@ public:
   // random generator features
   boost::mt19937 gen;                                                           // merseinne twister
 
-  randomgenerator(unsigned int seed);
+  explicit randomgenerator(unsigned int seed);
   ~randomgenerator();
   bool random_bool();
   bool random_bool_weighted(double weight_true);
@@ -66,5 +65,3 @@ public:
   std::string pick_one(std::string c1, std::string c2, std::string c3, std::string c4, std::string c5, std::string c6, std::string c7, std::string c8, std::string c9);
   std::string pick_one(std::string c1, std::string c2, std::string c3, std::string c4, std::string c5, std::string c6, std::string c7, std::string c8, std::string c9, std::string c10);
 };
-
-#endif // RANDOMGEN_H_INCLUDED

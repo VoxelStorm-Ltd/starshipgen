@@ -1,9 +1,9 @@
-#ifndef STARSHIP_H_INCLUDED
-#define STARSHIP_H_INCLUDED
+#pragma once
 
 #include <cstdint>
-#include <vector>
 #include <string>
+#include <vector>
+
 class randomgenerator;
 class component;
 class componentlist;
@@ -15,32 +15,32 @@ class starship {
 public:
   enum propulsiontype {
     PROPULSION_NONE,                                                            // no engine
-    PROPULSION_FUSION,                                                          // Fusion rocket (star trek impulse)
-    PROPULSION_FISSION,                                                         // Fission rocket
-    PROPULSION_FUSIONTHERMAL,                                                   // Fusion thermal rocket
-    PROPULSION_FISSIONTHERMAL,                                                  // Fission thermal rocket
-    PROPULSION_FISSIONFRAGMENT,                                                 // Fission-fragment rocket
-    PROPULSION_CHEMICAL,                                                        // Chemical rocket
-    PROPULSION_ANTIMATTER,                                                      // Antimatter rocket
-    PROPULSION_ION,                                                             // Ion thruster
-    PROPULSION_RAMSCOOP,                                                        // Ramscoop (fire upon the deep ramscoops)
-    PROPULSION_SAIL,                                                            // Light sails
+    PROPULSION_FUSION,                                                          // fusion rocket (star trek impulse)
+    PROPULSION_FISSION,                                                         // fission rocket
+    PROPULSION_FUSIONTHERMAL,                                                   // fusion thermal rocket
+    PROPULSION_FISSIONTHERMAL,                                                  // fission thermal rocket
+    PROPULSION_FISSIONFRAGMENT,                                                 // fission-fragment rocket
+    PROPULSION_CHEMICAL,                                                        // chemical rocket
+    PROPULSION_ANTIMATTER,                                                      // antimatter rocket
+    PROPULSION_ION,                                                             // ion thruster
+    PROPULSION_RAMSCOOP,                                                        // ramscoop (fire upon the deep ramscoops)
+    PROPULSION_SAIL,                                                            // light sails
     PROPULSION_VASIMR,                                                          // VASIMR
-    PROPULSION_ANTIMATTERFUSION,                                                // Antimatter catalyzed nuclear pulse
-    PROPULSION_WARPBUBBLE,                                                      // Space distortion bubble generator (star trek warp)
-    PROPULSION_HYPERDRIVE,                                                      // Hyperdrive (star wars hyperdrive0
-    PROPULSION_JUMPFINS,                                                        // Jump fins (fire upon the deep jump drive)
-    PROPULSION_WITCHSPACE,                                                      // Witchspace drive (elite hyperspace jump)
-    PROPULSION_WORMHOLE,                                                        // Wormholes (star trek wormholes)
-    PROPULSION_WARPGATE                                                         // Warp gates (cowboy bebop warp gates)
+    PROPULSION_ANTIMATTERFUSION,                                                // antimatter catalyzed nuclear pulse
+    PROPULSION_WARPBUBBLE,                                                      // space distortion bubble generator (star trek warp)
+    PROPULSION_HYPERDRIVE,                                                      // hyperdrive (star wars hyperdrive)
+    PROPULSION_JUMPFINS,                                                        // jump fins (fire upon the deep jump drive)
+    PROPULSION_WITCHSPACE,                                                      // witchspace drive (elite hyperspace jump)
+    PROPULSION_WORMHOLE,                                                        // wormholes (star trek wormholes)
+    PROPULSION_WARPGATE                                                         // warp gates (cowboy bebop warp gates)
   };
 
   enum energysourcetype {
-    ENERGY_FISSIONREACTOR,                                                      // Nuclear fission reactor
-    ENERGY_FUSIONREACTOR,                                                       // Nuclear fusion reactor
-    ENERGY_BATTERY,                                                             // Electrical battery
-    ENERGY_ANTIMATTERREACTOR,                                                   // Matter/antimatter reactor
-    ENERGY_SOLARPANEL,                                                          // Solar panel
+    ENERGY_FISSIONREACTOR,                                                      // nuclear fission reactor
+    ENERGY_FUSIONREACTOR,                                                       // nuclear fusion reactor
+    ENERGY_BATTERY,                                                             // electrical battery
+    ENERGY_ANTIMATTERREACTOR,                                                   // matter/antimatter reactor
+    ENERGY_SOLARPANEL,                                                          // solar panel
   };
 
   bool has_ftldrive;                                                            // can it go faster than light under its own power?
@@ -56,7 +56,7 @@ public:
   std::vector<component*> parts;                                                // the ship's constituent component parts
   std::vector<dependency*> dependencies;                                        // all shipboard interdependencies
 
-  // pointers to specific ship components:
+  // pointers to specific ship components
   std::vector<component*> component_engines_ftl;
   std::vector<component*> component_engines_stl;
   std::vector<component*> component_power;
@@ -86,5 +86,3 @@ public:
   unsigned int get_required_fuel_min();
   unsigned int get_required_fuel_min(std::vector<component*> *componentgroup);
 };
-
-#endif // STARSHIP_H_INCLUDED

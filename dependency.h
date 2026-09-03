@@ -1,7 +1,7 @@
-#ifndef DEPENDENCY_H_INCLUDED
-#define DEPENDENCY_H_INCLUDED
+#pragma once
 
 #include <vector>
+
 class component;
 
 class dependency {
@@ -26,5 +26,3 @@ public:
   bool check_conduit();
   std::vector<component*> get_broken_conduits();
 };
-
-#endif // DEPENDENCY_H_INCLUDED

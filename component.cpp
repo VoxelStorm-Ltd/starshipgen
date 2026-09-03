@@ -1,6 +1,6 @@
+#include "component.h"
 #include <cstdlib>
 #include <iostream>
-#include "component.h"
 #include "componentlist.h"
 #include "starship.h"
 
@@ -23,9 +23,9 @@ component::component(componenttype *thiscomponenttype, starship *thisship) {
   std::vector<std::string>::iterator i;
   //std::cout << "DEBUG: component is " << thistype->name << std::endl;
   for(i = thiscomponenttype->parts.begin(); i != thiscomponenttype->parts.end(); ++i) {
-    componenttype *thisparttype = thisship->componenttypes->getcomponent(*i);
-    if(thisparttype != NULL) {
-      component *thiscomponent = new component(thisparttype, thisship);
+    componenttype *thisparttype{thisship->componenttypes->getcomponent(*i)};
+    if(thisparttype != nullptr) {
+      component *thiscomponent{new component{thisparttype, thisship}};
       //std::cout << "  DEBUG: component " << thiscomponent->thistype->name << " is part of " << thistype->name << std::endl;
       parts.push_back(thiscomponent);
     } else {
@@ -61,8 +61,8 @@ std::string component::get_adjective() {
 
 unsigned int component::get_component_count() {
   /// Return the recursive count of all discrete components that make up this part
-  unsigned int count = 0;
-  for(std::vector<component*>::iterator i = parts.begin(); i != parts.end(); ++i) {
+  unsigned int count{0};
+  for(std::vector<component*>::iterator i{parts.begin()}; i != parts.end(); ++i) {
     count += (*i)->get_component_count();
   }
   if(count == 0) {
@@ -74,8 +74,8 @@ unsigned int component::get_component_count() {
 
 unsigned int component::get_systems_count() {
   /// Return the recursive count of all systems plus their subsystems that make up this part
-  unsigned int count = 1;                                                       // everything counts as 1 even if it has children
-  for(std::vector<component*>::iterator i = parts.begin(); i != parts.end(); ++i) {
+  unsigned int count{1};                                                        // everything counts as 1 even if it has children
+  for(std::vector<component*>::iterator i{parts.begin()}; i != parts.end(); ++i) {
     count += (*i)->get_systems_count();
   }
   return count;
@@ -83,9 +83,9 @@ unsigned int component::get_systems_count() {
 
 unsigned int component::get_time_on() {
   /// Return the total time this part takes to start up, including all subparts
-  unsigned int time = thistype->time_on;
-  for(std::vector<component*>::iterator i = parts.begin(); i != parts.end(); ++i) {
-    unsigned int thistime = (*i)->get_time_on();
+  unsigned int time{thistype->time_on};
+  for(std::vector<component*>::iterator i{parts.begin()}; i != parts.end(); ++i) {
+    unsigned int const thistime{(*i)->get_time_on()};
     if(thistime > time) {
       time = thistime;
     }
@@ -95,9 +95,9 @@ unsigned int component::get_time_on() {
 
 unsigned int component::get_time_off() {
   /// Return the total time this part takes to shut down, including all subparts
-  unsigned int time = thistype->time_off;
-  for(std::vector<component*>::iterator i = parts.begin(); i != parts.end(); ++i) {
-    unsigned int thistime = (*i)->get_time_off();
+  unsigned int time{thistype->time_off};
+  for(std::vector<component*>::iterator i{parts.begin()}; i != parts.end(); ++i) {
+    unsigned int const thistime{(*i)->get_time_off()};
     if(thistime > time) {
       time = thistime;
     }
@@ -107,8 +107,8 @@ unsigned int component::get_time_off() {
 
 unsigned int component::get_required_energy() {
   /// Return the total energy this system and all subsystems require for optimal function
-  unsigned int result = thistype->required_energy;
-  for(std::vector<component*>::iterator i = parts.begin(); i != parts.end(); ++i) {
+  unsigned int result{thistype->required_energy};
+  for(std::vector<component*>::iterator i{parts.begin()}; i != parts.end(); ++i) {
     result += (*i)->get_required_energy();
   }
   return result;
@@ -116,8 +116,8 @@ unsigned int component::get_required_energy() {
 
 unsigned int component::get_required_fuel() {
   /// Return the total fuel this system and all subsystems require for optimal function
-  unsigned int result = thistype->required_fuel;
-  for(std::vector<component*>::iterator i = parts.begin(); i != parts.end(); ++i) {
+  unsigned int result{thistype->required_fuel};
+  for(std::vector<component*>::iterator i{parts.begin()}; i != parts.end(); ++i) {
     result += (*i)->get_required_fuel();
   }
   return result;
@@ -125,8 +125,8 @@ unsigned int component::get_required_fuel() {
 
 unsigned int component::get_required_energy_min() {
   /// Return the total energy this system and all subsystems require for minimal function
-  unsigned int result = thistype->required_energy_min;
-  for(std::vector<component*>::iterator i = parts.begin(); i != parts.end(); ++i) {
+  unsigned int result{thistype->required_energy_min};
+  for(std::vector<component*>::iterator i{parts.begin()}; i != parts.end(); ++i) {
     result += (*i)->get_required_energy_min();
   }
   return result;
@@ -134,8 +134,8 @@ unsigned int component::get_required_energy_min() {
 
 unsigned int component::get_required_fuel_min() {
   /// Return the total fuel this system and all subsystems require for minimal function
-  unsigned int result = thistype->required_fuel_min;
-  for(std::vector<component*>::iterator i = parts.begin(); i != parts.end(); ++i) {
+  unsigned int result{thistype->required_fuel_min};
+  for(std::vector<component*>::iterator i{parts.begin()}; i != parts.end(); ++i) {
     result += (*i)->get_required_fuel_min();
   }
   return result;

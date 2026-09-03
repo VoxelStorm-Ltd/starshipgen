@@ -4,7 +4,7 @@
 #include <sstream>
 
 std::string civilisation::describe() {
-  char notethres = 64;                                                          // attribute notability threshold
+  char const notethres{64};                                                     // attribute notability threshold
 
   std::stringstream desc;
   desc << "This is a ";
@@ -17,7 +17,7 @@ std::string civilisation::describe() {
   } else {
     desc << "low-tech";
   }
-  //desc << " (techlevel " << (unsigned int)techlevel << ")";
+  //desc << " (techlevel " << static_cast<unsigned int>(techlevel) << ")";
   if(wealth >= 192) {
     desc << ", extremely wealthy";
   } else if(wealth >= 128) {
@@ -26,7 +26,7 @@ std::string civilisation::describe() {
   } else {
     desc << ", impoverished";
   }
-  //desc << " (wealth " << (unsigned int)wealth << ")";
+  //desc << " (wealth " << static_cast<unsigned int>(wealth) << ")";
 
   if(liberalism > notethres) {
     desc << " liberal";
@@ -34,7 +34,6 @@ std::string civilisation::describe() {
     desc << " conservative";
   }
   desc << " civilisation";
-
 
   if(hierarchicality > notethres) {
     desc << ", with a tendency towards hierarchy";
@@ -127,8 +126,7 @@ std::string civilisation::describe() {
     desc << " place a major emphasis on physical training, in between which they pass the time by";
   } else if(physicality < -notethres) {
     desc << " have a strong aversion to physical effort, preferring to occupy themselves by";
-  }
-  else {
+  } else {
     desc << " enjoy";
   }
   if(geekiness > notethres) {
@@ -254,33 +252,33 @@ std::string civilisation::describe() {
   }
 
   /*std::cout << "DEBUG:" <<
-    std::endl << "intelligence    " << (int)intelligence <<
-    std::endl << "strength        " << (int)strength <<
-    std::endl << "homogeneity     " << (int)homogeneity <<
-    std::endl << "stressability   " << (int)stressability <<
-    std::endl << "liberalism      " << (int)liberalism <<
-    std::endl << "hierarchicality " << (int)hierarchicality <<
-    std::endl << "discipline      " << (int)discipline <<
-    std::endl << "selfishness     " << (int)selfishness <<
-    std::endl << "generosity      " << (int)generosity <<
-    std::endl << "honesty         " << (int)honesty <<
-    std::endl << "sociability     " << (int)sociability <<
-    std::endl << "geekiness       " << (int)geekiness <<
-    std::endl << "physicality     " << (int)physicality <<
-    std::endl << "mercantility    " << (int)mercantility <<
-    std::endl << "artisticness    " << (int)artisticness <<
-    std::endl << "religiousness   " << (int)religiousness <<
-    std::endl << "fashion         " << (int)fashion <<
-    std::endl << "treachery       " << (int)treachery <<
-    std::endl << "belligirence    " << (int)belligirence <<
-    std::endl << "ruthlessness    " << (int)ruthlessness <<
-    std::endl << "vangefulness    " << (int)vangefulness <<
-    std::endl << "cowardice       " << (int)cowardice <<
-    std::endl << "laziness        " << (int)laziness <<
-    std::endl << "alcohol_use     " << (int)alcohol_use <<
-    std::endl << "tobacco_use     " << (int)tobacco_use <<
-    std::endl << "stimulant_use   " << (int)stimulant_use <<
-    std::endl << "drug_use        " << (int)drug_use << std::endl;*/
+    std::endl << "intelligence    " << static_cast<int>(intelligence) <<
+    std::endl << "strength        " << static_cast<int>(strength) <<
+    std::endl << "homogeneity     " << static_cast<int>(homogeneity) <<
+    std::endl << "stressability   " << static_cast<int>(stressability) <<
+    std::endl << "liberalism      " << static_cast<int>(liberalism) <<
+    std::endl << "hierarchicality " << static_cast<int>(hierarchicality) <<
+    std::endl << "discipline      " << static_cast<int>(discipline) <<
+    std::endl << "selfishness     " << static_cast<int>(selfishness) <<
+    std::endl << "generosity      " << static_cast<int>(generosity) <<
+    std::endl << "honesty         " << static_cast<int>(honesty) <<
+    std::endl << "sociability     " << static_cast<int>(sociability) <<
+    std::endl << "geekiness       " << static_cast<int>(geekiness) <<
+    std::endl << "physicality     " << static_cast<int>(physicality) <<
+    std::endl << "mercantility    " << static_cast<int>(mercantility) <<
+    std::endl << "artisticness    " << static_cast<int>(artisticness) <<
+    std::endl << "religiousness   " << static_cast<int>(religiousness) <<
+    std::endl << "fashion         " << static_cast<int>(fashion) <<
+    std::endl << "treachery       " << static_cast<int>(treachery) <<
+    std::endl << "belligirence    " << static_cast<int>(belligirence) <<
+    std::endl << "ruthlessness    " << static_cast<int>(ruthlessness) <<
+    std::endl << "vangefulness    " << static_cast<int>(vangefulness) <<
+    std::endl << "cowardice       " << static_cast<int>(cowardice) <<
+    std::endl << "laziness        " << static_cast<int>(laziness) <<
+    std::endl << "alcohol_use     " << static_cast<int>(alcohol_use) <<
+    std::endl << "tobacco_use     " << static_cast<int>(tobacco_use) <<
+    std::endl << "stimulant_use   " << static_cast<int>(stimulant_use) <<
+    std::endl << "drug_use        " << static_cast<int>(drug_use) << std::endl;*/
 
   return desc.str();
 }
